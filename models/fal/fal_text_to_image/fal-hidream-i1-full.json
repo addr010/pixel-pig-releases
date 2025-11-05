@@ -1,0 +1,37 @@
+{
+  "models": [
+    {
+      "id": "fal-ai/hidream-i1-full",
+      "displayName": "Hidream I1",
+      "parameters": {
+            "imageAspect": {
+                "apiParameter": "image_size",
+                "default": "16:9",
+                "options": [
+                    {
+                        "value": "16:9",
+                        "display": "16:9",
+                        "apiValue": "landscape_16_9"
+                    },
+                    {
+                        "value": "9:16",
+                        "display": "9:16",
+                        "apiValue": "portrait_16_9"
+                    },
+                    {
+                        "value": "1:1",
+                        "display": "1:1",
+                        "apiValue": "square_hd"
+                    }
+                ]
+            },
+            "enableSafetyChecker": {
+                "apiParameter": "enable_safety_checker",
+                "default": "false",
+                "apiValueType": "bool",
+                "hidden": true
+            }
+        }
+    }
+  ]
+}
