@@ -1,6 +1,9 @@
 # Pixel Pig  
 *A desktop studio for AI workflows*  
 
+## Screenshots  
+![Pixel Pig Main Window](pixel-pig-work.png)  
+
 ---
 
 ## 🎬 What is Pixel Pig?  
