@@ -1,0 +1,48 @@
+{
+  "models": [
+    {
+      "id": "openai/sora-2",
+      "displayName": "Sora 2",
+      "parameters": {
+        "image": {
+          "apiParameter": "input_reference",
+          "valueFormat": "string",
+          "hidden": true
+        },
+        "durationSeconds": {
+          "apiParameter": "seconds",
+          "default": "4",
+          "options": [
+            {
+              "value": "4",
+              "display": "4 seconds"
+            },
+            {
+              "value": "8",
+              "display": "8 seconds"
+            },
+            {
+              "value": "12",
+              "display": "12 seconds"
+            }
+          ],
+          "apiValueType": "int"
+        },
+        "imageAspect": {
+          "apiParameter": "aspect_ratio",
+          "default": "landscape",
+          "options": [
+            {
+              "value": "landscape",
+              "display": "16:9"
+            },
+            {
+              "value": "portrait",
+              "display": "9:16"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
