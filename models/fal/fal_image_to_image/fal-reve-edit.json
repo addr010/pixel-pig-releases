@@ -1,0 +1,29 @@
+{
+  "models": [
+    {
+      "id": "fal-ai/reve/edit",
+      "displayName": "Reve Edit",
+      "parameters": {
+        "image": {
+          "apiParameter": "image_url",
+          "valueFormat": "scalar",
+          "hidden": true
+        },
+        "outputFormat": {
+          "apiParameter": "output_format",
+          "default": "jpeg",
+          "options": [
+            { "value": "jpeg", "display": "JPEG" },
+            { "value": "png", "display": "PNG" }
+          ]
+        },
+        "enableSafetyChecker": {
+          "apiParameter": "enable_safety_checker",
+          "default": "false",
+          "apiValueType": "bool",
+          "hidden": true
+        }
+      }
+    }
+  ]
+}
