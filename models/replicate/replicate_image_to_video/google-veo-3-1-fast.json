@@ -1,0 +1,77 @@
+{
+  "models": [
+    {
+      "id": "google/veo-3.1-fast",
+      "displayName": "Veo 3.1 Fast",
+      "parameters": {
+        "image": {
+          "apiParameter": "image",
+          "valueFormat": "string",
+          "hidden": true
+        },
+        "durationSeconds": {
+          "apiParameter": "duration",
+          "default": "8",
+          "options": [
+            {
+              "value": "4",
+              "display": "4 seconds"
+            },
+            {
+              "value": "6",
+              "display": "6 seconds"
+            },
+            {
+              "value": "8",
+              "display": "8 seconds"
+            }
+          ],
+          "apiValueType": "int"
+        },
+        "resolution": {
+          "apiParameter": "resolution",
+          "default": "1080p",
+          "options": [
+            {
+              "value": "720p",
+              "display": "720p"
+            },
+            {
+              "value": "1080p",
+              "display": "1080p"
+            }
+          ]
+        },
+        "imageAspect": {
+          "apiParameter": "aspect_ratio",
+          "default": "16:9",
+          "options": [
+            {
+              "value": "16:9",
+              "display": "16:9"
+            },
+            {
+              "value": "9:16",
+              "display": "9:16"
+            }
+          ]
+        },
+        "negativePrompt": {
+          "apiParameter": "negative_prompt",
+          "hidden": true
+        },
+        "seed": {
+          "apiParameter": "seed",
+          "hidden": true,
+          "apiValueType": "int"
+        },
+        "generateAudio": {
+          "apiParameter": "generate_audio",
+          "default": "true",
+          "hidden": false,
+          "apiValueType": "boolean"
+        }
+      }
+    }
+  ]
+}
