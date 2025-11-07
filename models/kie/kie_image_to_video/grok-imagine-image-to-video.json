@@ -1,0 +1,34 @@
+{
+  "models": [
+    {
+      "id": "grok-imagine/image-to-video",
+      "displayName": "Grok Imagine Image to Video",
+      "parameters": {
+        "image": {
+          "apiParameter": "image_urls",
+          "valueFormat": "array",
+          "hidden": true
+        },       
+        "mode": {
+          "apiParameter": "mode",
+          "default": "normal",
+          "apiValueType": "string",
+          "options": [
+            {
+              "value": "fun",
+              "display": "Fun"
+            },
+            {
+              "value": "normal",
+              "display": "Normal"
+            },
+            {
+              "value": "spicy",
+              "display": "Spicy"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
