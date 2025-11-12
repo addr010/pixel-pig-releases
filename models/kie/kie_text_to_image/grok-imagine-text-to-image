@@ -1,0 +1,19 @@
+{
+  "models": [
+    {
+      "id": "grok-imagine/text-to-image",
+      "displayName": "Grok Imagine",
+      "parameters": {
+        "aspectRatio": {
+          "apiParameter": "aspect_ratio",
+          "default": "3:2",
+          "options": [
+            { "value": "1:1", "display": "Square (1:1)" },
+            { "value": "2:3", "display": "Portrait (2:3)" },
+            { "value": "3:2", "display": "Landscape (3:2)" }
+          ]
+        }
+      }
+    }
+  ]
+}
