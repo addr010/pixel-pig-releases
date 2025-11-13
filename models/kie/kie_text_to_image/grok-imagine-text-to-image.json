@@ -4,7 +4,7 @@
       "id": "grok-imagine/text-to-image",
       "displayName": "Grok Imagine",
       "parameters": {
-        "aspectRatio": {
+        "imageAspect": {
           "apiParameter": "aspect_ratio",
           "default": "3:2",
           "options": [
