@@ -27,8 +27,8 @@ Models that rank highly on public leaderboards are included out of the box, and 
 This repository hosts the **beta builds** of Pixel Pig.  
 You can find the downloads in the **Releases** section:  
 
-- `PixelPig-Windows.zip` (Windows installer)  
-- `PixelPig-macOS.zip` (macOS build)  
+- `PixelPig-win-64-[version]-installer.exe` (Windows installer)  
+- `PixelPig-macOS-arm64-[version].zip` (macOS build)  
 
 Pixel Pig is **donation-ware** — free to use.  
 If you or your team are making money with it, consider *sharing the love*.  
