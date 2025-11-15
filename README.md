@@ -37,9 +37,9 @@ Donation links are available inside the app.
 ---
 
 ## 🛠 Getting Started  
-1. Download the ZIP for your platform from the **Releases** tab.  
-2. Unzip it wherever you like, then run the executable (Windows installer) or app bundle (macOS).  
-3. The macOS app is not signed (working on it), so you’ll need to allow it to run manually. A helper script and instructions are included for macOS.  
+1. Download the file for your platform from the **Releases** tab.  
+2. Run the executable (Windows installer) or app bundle (macOS).  
+3. Both platform OS will warn you that this file is from the 'internet' say you understand...  
 4. Use it in your workflow and see how it fits.  
 5. Found a bug or something odd? [Open an issue](../../issues).  
 6. Training and how-to support are available on **Skool**.  
