@@ -27,7 +27,7 @@ Models that rank highly on public leaderboards are included out of the box, and 
 This repository hosts the **beta builds** of Pixel Pig.  
 You can find the downloads in the **Releases** section:  
 
-- `PixelPig-Windows.zip` (Windows build)  
+- `PixelPig-Windows.zip` (Windows installer)  
 - `PixelPig-macOS.zip` (macOS build)  
 
 Pixel Pig is **donation-ware** — free to use.  
@@ -38,8 +38,8 @@ Donation links are available inside the app.
 
 ## 🛠 Getting Started  
 1. Download the ZIP for your platform from the **Releases** tab.  
-2. Unzip it wherever you like, then run the executable (Windows) or app bundle (macOS).  
-3. The app is not signed, so you’ll need to allow it to run manually. A helper script and instructions are included for macOS.  
+2. Unzip it wherever you like, then run the executable (Windows installer) or app bundle (macOS).  
+3. The macOS app is not signed (working on it), so you’ll need to allow it to run manually. A helper script and instructions are included for macOS.  
 4. Use it in your workflow and see how it fits.  
 5. Found a bug or something odd? [Open an issue](../../issues).  
 6. Training and how-to support are available on **Skool**.  
