@@ -44,6 +44,18 @@ Donation links are available inside the app.
 5. Found a bug or something odd? [Open an issue](../../issues).  
 6. Training and how-to support are available on **Skool**.  
 
+
+### 🔧 FFmpeg Requirement
+
+Pixel Pig’s audio and video combine features require **FFmpeg** to be installed on your system. These tools will not appear unless FFmpeg is available in your PATH.
+
+To install FFmpeg:
+
+- **macOS**: `brew install ffmpeg`
+- **Windows**: `choco install ffmpeg` or download directly from https://ffmpeg.org/download.html
+
+Once installed, restart Pixel Pig — it will automatically detect FFmpeg and enable the relevant tools.
+
 ---
 
 ## 🎯 Known Issues & Roadmap  
