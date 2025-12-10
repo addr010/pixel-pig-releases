@@ -316,8 +316,8 @@
                         day: 'numeric'
                     });
 
-                    const winAsset = release.assets.find(a => a.name.includes('win') && a.name.endsWith('.exe'));
-                    const macAsset = release.assets.find(a => a.name.includes('macOS') && a.name.endsWith('.zip'));
+                    const winAsset = release.assets.find(a => a.name.toLowerCase().includes('win') && a.name.endsWith('.exe'));
+                    const macAsset = release.assets.find(a => a.name.toLowerCase().includes('macos') && a.name.endsWith('.zip'));
 
                     let platformLinks = '';
                     if (winAsset) {
