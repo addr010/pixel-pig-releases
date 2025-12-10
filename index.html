@@ -342,7 +342,7 @@
                         day: 'numeric'
                     });
 
-                    const prereleasebadge = release.prerelease ? '<span class="badge">Pre-release</span>' : '';
+                    const prereleaseBadge = release.prerelease ? '<span class="badge">Pre-release</span>' : '';
 
                     const winAsset = release.assets.find(a => a.name.toLowerCase().includes('win') && a.name.endsWith('.exe'));
                     const macAsset = release.assets.find(a => a.name.toLowerCase().includes('macos') && a.name.endsWith('.zip'));
