@@ -25,10 +25,8 @@ Models that rank highly on public leaderboards are included out of the box, and 
 
 ## 🔍 Beta Release – Try It Now  
 This repository hosts the **beta builds** of Pixel Pig.  
-You can find the downloads in the **Releases** section:  
 
-- `PixelPig-win-64-[version]-installer.exe` (Windows installer)  
-- `PixelPig-macOS-arm64-[version].zip` (macOS build)  
+**[⬇️ Download Pixel Pig](https://addr010.github.io/pixel-pig-releases/)**
 
 Pixel Pig is **donation-ware** — free to use.  
 If you or your team are making money with it, consider *sharing the love*.  
@@ -37,12 +35,14 @@ Donation links are available inside the app.
 ---
 
 ## 🛠 Getting Started  
-1. Download the file for your platform from the **Releases** tab.  
+1. **[Download the latest release](https://addr010.github.io/pixel-pig-releases/)** for your platform.  
 2. Run the executable (Windows installer) or app bundle (macOS).  
-3. Both platform OS will warn you that this file is from the 'internet' say you understand...  
+3. Your OS will show a security warning — on Windows click "More info" then "Run anyway", on macOS click "Open" to confirm.  
 4. Use it in your workflow and see how it fits.  
 5. Found a bug or something odd? [Open an issue](../../issues).  
-6. Training and how-to support are available on **Skool**.  
+6. Training and how-to support are available in the [Pixel Pig Skool community](https://www.skool.com/pixel-pig-2056/classroom).  
+
+**🌟 If Pixel Pig saves you time, consider [leaving a star on GitHub](https://github.com/addr010/pixel-pig-releases) — it helps others discover the project.**  
 
 
 ### 🔧 FFmpeg Requirement
