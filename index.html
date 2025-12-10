@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Pig - Download</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--border);
+            color: var(--accent-hover);
+            border-color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .downloads {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .download-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .download-card:hover {
+            border-color: var(--accent);
+        }
+
+        .download-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .version {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .platform-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg);
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .platform-btn:hover {
+            background: var(--border);
+            color: var(--accent);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .requirements {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .requirements h3 {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .requirements li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .requirements li::before {
+            content: "→ ";
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pixel Pig</h1>
+            <p class="tagline">A desktop studio for AI workflows</p>
+            <div class="links">
+                <a href="https://github.com/addr010/pixel-pig-releases" class="btn">GitHub</a>
+                <a href="https://github.com/addr010/pixel-pig-releases/issues" class="btn">Report Issue</a>
+            </div>
+        </header>
+
+        <section class="section">
+            <h2>Download Latest Release</h2>
+            <div class="downloads" id="releases">
+                <!-- Releases will be loaded here via JavaScript -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <span class="version">Loading releases...</span>
+                    </div>
+                    <p style="color: var(--text-secondary);">Please wait while we fetch the latest releases from GitHub.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="requirements">
+                <h3>System Requirements</h3>
+                <ul>
+                    <li><strong>Windows:</strong> Windows 10/11 (64-bit)</li>
+                    <li><strong>macOS:</strong> macOS 11 (Big Sur) or later (Apple Silicon)</li>
+                    <li><strong>Optional:</strong> FFmpeg for audio/video features</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Installation</h2>
+            <div class="requirements">
+                <h3>Windows</h3>
+                <ul>
+                    <li>Download the <code>.exe</code> installer</li>
+                    <li>Run the installer and follow the prompts</li>
+                    <li>Windows may show a security warning — click "More info" and "Run anyway"</li>
+                </ul>
+            </div>
+            <div class="requirements" style="margin-top: 1rem;">
+                <h3>macOS</h3>
+                <ul>
+                    <li>Download the <code>.zip</code> file</li>
+                    <li>Extract and drag Pixel Pig to your Applications folder</li>
+                    <li>Right-click the app and select "Open" to bypass Gatekeeper on first launch</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>Pixel Pig is donation-ware — free to use. If it helps you make money, consider sharing the love.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Fetch releases from GitHub API
+        async function loadReleases() {
+            try {
+                const response = await fetch('https://api.github.com/repos/addr010/pixel-pig-releases/releases');
+                const releases = await response.json();
+                
+                const releasesContainer = document.getElementById('releases');
+                releasesContainer.innerHTML = '';
+
+                releases.slice(0, 5).forEach(release => {
+                    const card = document.createElement('div');
+                    card.className = 'download-card';
+                    
+                    const date = new Date(release.published_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    const winAsset = release.assets.find(a => a.name.includes('win') && a.name.endsWith('.exe'));
+                    const macAsset = release.assets.find(a => a.name.includes('macOS') && a.name.endsWith('.zip'));
+
+                    let platformLinks = '';
+                    if (winAsset) {
+                        platformLinks += `
+                            <a href="${winAsset.browser_download_url}" class="platform-btn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                                </svg>
+                                Windows
+                            </a>
+                        `;
+                    }
+                    if (macAsset) {
+                        platformLinks += `
+                            <a href="${macAsset.browser_download_url}" class="platform-btn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                </svg>
+                                macOS
+                            </a>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        <div class="download-header">
+                            <span class="version">${release.tag_name}</span>
+                            <span class="date">${date}</span>
+                        </div>
+                        ${release.body ? `<p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">${release.body.split('\n')[0]}</p>` : ''}
+                        <div class="platform-links">
+                            ${platformLinks || '<p style="color: var(--text-secondary);">No downloads available</p>'}
+                        </div>
+                    `;
+                    
+                    releasesContainer.appendChild(card);
+                });
+            } catch (error) {
+                document.getElementById('releases').innerHTML = `
+                    <div class="download-card">
+                        <p style="color: var(--text-secondary);">Unable to load releases. Please visit the <a href="https://github.com/addr010/pixel-pig-releases/releases" style="color: var(--accent);">GitHub Releases page</a> directly.</p>
+                    </div>
+                `;
+            }
+        }
+
+        loadReleases();
+    </script>
+</body>
+</html>
