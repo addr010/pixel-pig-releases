@@ -140,17 +140,23 @@
 
         .download-header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .version-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .version {
             font-size: 1.4rem;
             font-weight: 700;
             color: var(--text);
-        }   gap: 0.5rem;
-        }
-
-        .version {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--accent);
         }
 
         .date {
@@ -160,16 +166,15 @@
 
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.6rem;
-            background: rgba(179, 102, 255, 0.2);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 0.15rem 0.4rem;
+            background: rgba(179, 102, 255, 0.15);
+            color: var(--text-secondary);
+            border: 1px solid rgba(179, 102, 255, 0.3);
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-left: 0.5rem;
+            letter-spacing: 0.03em;
         }
 
         .platform-links {
@@ -371,7 +376,10 @@
 
                     card.innerHTML = `
                         <div class="download-header">
-                            <span class="version">${release.tag_name}${prereleaseBadge}</span>
+                            <div class="version-wrapper">
+                                <span class="version">${release.tag_name}</span>
+                                ${prereleaseBadge}
+                            </div>
                             <span class="date">${date}</span>
                         </div>
                         ${release.body ? `<p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">${release.body.split('\n')[0]}</p>` : ''}
