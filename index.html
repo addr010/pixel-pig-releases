@@ -367,6 +367,8 @@
                                 macOS
                             </a>
                         `;
+                    }
+
                     card.innerHTML = `
                         <div class="download-header">
                             <span class="version">${release.tag_name}${prereleaseBadge}</span>
@@ -375,8 +377,6 @@
                         ${release.body ? `<p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">${release.body.split('\n')[0]}</p>` : ''}
                         <div class="platform-links">
                             ${platformLinks || '<p style="color: var(--text-secondary);">No downloads available</p>'}
-                        </div>
-                    `;      ${platformLinks || '<p style="color: var(--text-secondary);">No downloads available</p>'}
                         </div>
                     `;
                     
