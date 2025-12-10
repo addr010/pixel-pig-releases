@@ -152,6 +152,20 @@
             font-size: 0.9rem;
         }
 
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            background: rgba(179, 102, 255, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 0.5rem;
+        }
+
         .platform-links {
             display: flex;
             gap: 0.75rem;
@@ -316,6 +330,8 @@
                         day: 'numeric'
                     });
 
+                    const prereleasebadge = release.prerelease ? '<span class="badge">Pre-release</span>' : '';
+
                     const winAsset = release.assets.find(a => a.name.toLowerCase().includes('win') && a.name.endsWith('.exe'));
                     const macAsset = release.assets.find(a => a.name.toLowerCase().includes('macos') && a.name.endsWith('.zip'));
 
@@ -339,16 +355,16 @@
                                 macOS
                             </a>
                         `;
-                    }
-
                     card.innerHTML = `
                         <div class="download-header">
-                            <span class="version">${release.tag_name}</span>
+                            <span class="version">${release.tag_name}${prereleaseBadge}</span>
                             <span class="date">${date}</span>
                         </div>
                         ${release.body ? `<p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">${release.body.split('\n')[0]}</p>` : ''}
                         <div class="platform-links">
                             ${platformLinks || '<p style="color: var(--text-secondary);">No downloads available</p>'}
+                        </div>
+                    `;      ${platformLinks || '<p style="color: var(--text-secondary);">No downloads available</p>'}
                         </div>
                     `;
                     
