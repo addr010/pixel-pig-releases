@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Pig - Download</title>
+    <title>Pixel Pig - AI Workflow Desktop App for Creators</title>
+    <meta name="description" content="Create images, videos, music, 3D & more with one desktop app. Connect to top AI models from Fal, Replicate, Kie.ai & ComfyUI. Free download for Windows & Mac.">
+    
+    <!-- Open Graph for Facebook/social sharing -->
+    <meta property="og:title" content="Pixel Pig - AI Workflow Desktop App">
+    <meta property="og:description" content="Batch generate images, videos, music & 3D with top AI models. From the maker of Splode Lab (50k+ downloads).">
+    <meta property="og:image" content="https://addr010.github.io/pixel-pig-releases/pixel-pig-work.webp">
+    <meta property="og:url" content="https://addr010.github.io/pixel-pig-releases/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pixel Pig - AI Workflow Desktop App">
+    <meta name="twitter:description" content="Create images, videos, music & 3D with top AI models. Free for Windows & Mac.">
+    <meta name="twitter:image" content="https://addr010.github.io/pixel-pig-releases/pixel-pig-work.webp">
+    
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -43,6 +58,17 @@
             border-bottom: 1px solid var(--border);
         }
 
+        .creator-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(217, 70, 239, 0.1);
+            border: 1px solid rgba(217, 70, 239, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
         .hero-image {
             max-width: 800px;
             width: 100%;
@@ -74,9 +100,177 @@
         }
 
         .tagline {
-            font-size: 1.2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtagline {
+            font-size: 1.1rem;
             color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-container {
+            margin: 2rem 0;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(217, 70, 239, 0.4);
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(217, 70, 239, 0.6);
+            background: linear-gradient(135deg, #e879f9, #c084fc);
+        }
+
+        .cta-btn .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .trust-line {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .benefit-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(217, 70, 239, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .benefit-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .proof-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .proof-section h3 {
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .use-case-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .use-case-list li {
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+        }
+
+        .use-case-list li::before {
+            content: "✓ ";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .video-section {
+            margin: 3rem 0;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .video-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(217, 70, 239, 0.2);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .links {
@@ -269,9 +463,30 @@
 <body>
     <div class="container">
         <header>
-            <img src="pixel-pig-work.png" alt="Pixel Pig Studio" class="hero-image">
+            <div class="creator-badge">
+                <span style="color: var(--accent); font-weight: 600;">★</span> From the maker of Splode Lab <span style="color: var(--text-secondary);">(50,000+ downloads • Top 20 VFX app)</span>
+            </div>
             <h1>Pixel Pig</h1>
-            <p class="tagline">A desktop studio for AI workflows</p>
+            <p class="tagline">Create Images, Videos, Music, 3D & More—All in One Desktop App</p>
+            <p class="subtagline">Connect to top-rated AI models from Fal, Replicate, Kie.ai, ComfyUI & Open Router. Batch generate, organize, and manage everything in one place. No more juggling browser tabs.</p>
+            
+            <div class="cta-container">
+                <a href="#download" class="cta-btn primary">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download Free (Windows & Mac)
+                </a>
+                <p class="trust-line">✓ Free forever &nbsp;•&nbsp; ✓ Bring your own API keys &nbsp;•&nbsp; ✓ Active development</p>
+            </div>
+
+            <picture>
+                <source srcset="pixel-pig-work.webp" type="image/webp">
+                <img src="pixel-pig-work-optimized.png" alt="Pixel Pig Studio - Batch AI generation in action" class="hero-image">
+            </picture>
+            
             <div class="links">
                 <a href="https://github.com/addr010/pixel-pig-releases" class="btn">GitHub</a>
                 <a href="https://github.com/addr010/pixel-pig-releases/issues" class="btn">Report Issue</a>
@@ -279,6 +494,65 @@
         </header>
 
         <section class="section">
+            <div class="benefits">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>10x Faster Workflows</h3>
+                    <p>Batch generate across multiple models and aspect ratios simultaneously. What used to take hours now takes minutes.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>All the Top Models</h3>
+                    <p>Access the best AI models across images, video, music, speech, 3D & LLMs. Community-extensible so you can add your own.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>No-Code Orchestration</h3>
+                    <p>Simple workflow automation without the complexity. No JSON configs or technical setup—just click and create.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section video-section">
+            <h2>See Pixel Pig In Action</h2>
+            <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">Watch how creators are using Pixel Pig to supercharge their AI workflows</p>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/3qad1fzvSnY?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/qEzzg2ZLwrk?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/GWSn4FBYzNc?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Y2YYwe4aTfc?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section proof-section">
+            <h3>Perfect for Content Creators, Designers & Indie Studios</h3>
+            <ul class="use-case-list">
+                <li>UGC & social media creators</li>
+                <li>YouTube & TikTok producers</li>
+                <li>Game asset designers</li>
+                <li>Digital marketers</li>
+                <li>Indie animation studios</li>
+                <li>E-commerce product visuals</li>
+            </ul>
+        </section>
+
+        <section class="section" id="download">
             <h2>Download Latest Release</h2>
             <div class="downloads" id="releases">
                 <!-- Releases will be loaded here via JavaScript -->
@@ -323,7 +597,14 @@
         </section>
 
         <footer>
-            <p>Pixel Pig is donation-ware — free to use. If it helps you make money, consider sharing the love.</p>
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--text);">Still on the fence?</h3>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Pixel Pig is free to download and use. Try it risk-free.</p>
+                <a href="#download" class="cta-btn" style="font-size: 1rem; padding: 1rem 2rem;">
+                    Get Started Free
+                </a>
+            </div>
+            <p style="margin-top: 2rem;">Pixel Pig is donation-ware — free to use. If it helps you make money, consider sharing the love.</p>
         </footer>
     </div>
 
@@ -337,7 +618,7 @@
                 const releasesContainer = document.getElementById('releases');
                 releasesContainer.innerHTML = '';
 
-                releases.slice(0, 5).forEach(release => {
+                releases.slice(0, 2).forEach(release => {
                     const card = document.createElement('div');
                     card.className = 'download-card';
                     
