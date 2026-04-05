@@ -44,6 +44,17 @@ Donation links are available inside the app.
 
 **🌟 If Pixel Pig saves you time, consider [leaving a star on GitHub](https://github.com/addr010/pixel-pig-releases) — it helps others discover the project.**  
 
+### 🤖 MCP for Local AI Clients
+
+Pixel Pig releases now include a bundled MCP server for local AI tools such as Codex, Claude Desktop, and other MCP-compatible clients.
+
+- If Pixel Pig is already running, connect to `http://127.0.0.1:7361/mcp`
+- If your AI client prefers `stdio`, launch:
+  - macOS: `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio`
+  - Windows: `C:\Path\To\PixelPig\PixelPig.McpServer.exe --stdio`
+- The app normally starts and stops the MCP sidecar automatically, so manual launch is only needed when your AI client wants to start the server itself.
+
+Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
 ### 🔧 FFmpeg Requirement
 
