@@ -56,11 +56,16 @@ Pixel Pig releases now include a bundled MCP server for local AI tools such as C
 
 Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
-### 🎬 HyperFrames Skill for Pixel Pig
+### 🎬 Agent Skills for Pixel Pig
 
-Pixel Pig ships an agent skill that helps AI coding agents begin HyperFrames compositions with Pixel Pig project support. Use it when you want an agent to start from a Pixel Pig movie, rough cut, reusable asset collection, linked project media, or Pixel Pig MCP-generated assets, then attach the rendered HyperFrames layer back to Pixel Pig.
+Pixel Pig ships agent skills that help AI coding agents use Pixel Pig MCP as an organized production workspace.
 
-Install the Pixel Pig skill:
+- `/pixelpig-cinema-director` creates cinematic assets and rough movies with Pixel Pig MCP, including GPT Image 2 and Seedance workflow runs.
+- `/hyperframes-pixelpig` begins a HyperFrames composition from a Pixel Pig project/movie and attaches the finished render back to Pixel Pig.
+
+Both skills require a Pixel Pig project before generation so workflow artifacts land inside the project instead of generic downloads.
+
+Install the Pixel Pig skills:
 
 ```bash
 npx skills add addr010/pixel-pig-releases
@@ -72,11 +77,13 @@ HyperFrames itself provides the composition, animation, media preprocessing, and
 npx skills add heygen-com/hyperframes
 ```
 
-Then start Pixel Pig-aware video work by explicitly invoking the Pixel Pig bridge skill in your agent:
+Then start Pixel Pig-aware video work by explicitly invoking the right skill in your agent:
+
+> Using `/pixelpig-cinema-director`, create a cinematic rough movie in my Pixel Pig project using GPT Image 2 stills and Seedance 2.0 video shots.
 
 > Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig project and attach the finished render back to the movie.
 
-The Pixel Pig skill prepares the project context, MCP workflow assets, symlinks, and attach-back metadata first. It then hands off to the normal HyperFrames skills (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-media`) for authoring, validation, preview, and render.
+The Pixel Pig skills prepare project context, MCP workflow assets, movies, symlinks, and attach-back metadata first. They then hand off to the normal HyperFrames skills (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-media`) for authoring, validation, preview, and render.
 
 ### 🔧 FFmpeg Requirement
 
