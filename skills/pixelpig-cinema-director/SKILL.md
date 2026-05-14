@@ -18,7 +18,7 @@ Before calling `pixelpig_run_workflow`:
 3. If the user asks for a new project, call `pixelpig_create_project`; use the returned `projectRoot` and `projectStructure`.
 4. Stop and ask if no project can be resolved.
 
-Never call `pixelpig_run_workflow` without `projectRoot`. Project-root workflow runs handle organized artifact placement.
+Never call `pixelpig_run_workflow` without `projectRoot`. Project-root workflow tasks handle organized artifact placement.
 
 Use PixelPig movies as production state. Collections are optional inputs only when the user explicitly points to an asset pack.
 
@@ -41,8 +41,15 @@ Workflow generation:
 - `pixelpig_list_workflows`
 - `pixelpig_describe_workflow`
 - `pixelpig_run_workflow`
-- `pixelpig_get_workflow_run`
-- `pixelpig_wait_workflow_run`
+- `tasks/get`
+- `tasks/result`
+- `tasks/list`
+
+For workflow inputs, pass existing local files with `files[].path`. PixelPig workflow code handles provider upload and transport internally.
+
+Workflow generation is MCP task-native. Call `pixelpig_run_workflow` as a task-augmented `tools/call` with `params.task`, keep the returned `task.taskId`, poll `tasks/get` using the server-provided `pollInterval`, then call `tasks/result` to get final workflow outputs. Do not add legacy wait options such as `waitForCompletion`, `maxWaitSeconds`, or `pollSeconds`.
+
+When examples below show workflow JSON, that JSON is the `arguments` object for the task-augmented `pixelpig_run_workflow` call. The MCP request wrapper must include `params.task`.
 
 HyperFrames handoff:
 
@@ -81,7 +88,7 @@ If a workflow is blocked by moderation or censorship, retry with a more relaxed 
 
 Tell the user when changing provider or model after a failure so they understand cost, balance, and moderation behavior.
 
-For music, mention that PixelPig can generate soundtrack assets when the user asks for music or score. Prefer `kie-suno-generate` when it appears in `pixelpig_list_workflows`; use `V5_5` when available, default to instrumental unless the user asks for vocals, and add returned audio `outputs[].filePath` to the PixelPig movie with `pixelpig_add_movie_audio_clip`.
+For music, mention that PixelPig can generate soundtrack assets when the user asks for music or score. Prefer `kie-suno-generate` when it appears in `pixelpig_list_workflows`; use `V5_5` when available, default to instrumental unless the user asks for vocals, and add audio `outputs[].filePath` from `tasks/result` to the PixelPig movie with `pixelpig_add_movie_audio_clip`.
 
 ## Vision Fallback For Agents Without Vision
 
@@ -99,16 +106,14 @@ For images, use `fal-image-to-text` with Grok 4 Fast:
   "projectRoot": "<absolute project root>",
   "model": "x-ai/grok-4-fast",
   "files": [
-    { "name": "reference.png", "dataUri": "<data uri>" }
+    { "path": "<absolute image path>" }
   ],
   "parameters": {
     "prompt": "Describe only visible image content for cinematic production. Include subject identity markers, wardrobe, pose, lighting, camera/framing, environment, props, readable text, and any visual continuity details. Do not infer names, brands, age labels, backstory, or hidden traits.",
     "promptFormat": "none",
     "temperature": "0.2",
     "combineOutputs": "false"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 600
+  }
 }
 ```
 
@@ -122,16 +127,14 @@ Short clips under 10 seconds are cheap enough to analyze when needed, so use thi
   "projectRoot": "<absolute project root>",
   "model": "google/gemini-2.5-flash",
   "files": [
-    { "name": "clip.mp4", "dataUri": "<data uri>" }
+    { "path": "<absolute video path>" }
   ],
   "parameters": {
     "prompt": "Describe what happens in this video for cinematic continuity. Include subjects, wardrobe, actions, camera motion, scene changes, lighting, environment, props, visible text, audio-relevant events, and ending state. Do not invent names, brands, ages, or story context not visible in the clip.",
     "promptFormat": "none",
     "temperature": "0.2",
     "combineOutputs": "false"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 900
+  }
 }
 ```
 
@@ -139,13 +142,13 @@ Use the returned text as analysis notes, not as final truth. Mirror important ex
 
 ## Asset Naming With `filenamePrefix`
 
-Use `parameters.filenamePrefix` on workflow runs to make generated assets easy for both agents and humans to find later. Choose short, searchable, stable prefixes for the thing being created:
+Use `parameters.filenamePrefix` on workflow task runs to make generated assets easy for both agents and humans to find later. Choose short, searchable, stable prefixes for the thing being created:
 
 - character assets: `<character-slug>-character-base`, `<character-slug>-character-sheet`, `<character-slug>-portrait`
 - scene plates: `<scene-slug>-plate`, `<scene-slug>-environment`, `<scene-slug>-keyframe`
 - video shots: `<scene-slug>-shot-01-take-01`, `<scene-slug>-shot-01-take-02`
 - music/audio: `<scene-slug>-score`, `<scene-slug>-ambient`, `<movie-slug>-theme`
-- vision notes: `<source-asset-code>-vision-notes`
+- vision notes: `<source-slug>-vision-notes`
 
 Use the same prefix family across related runs so a later request like "make a shot of Jessica" can be resolved by finding assets named like `jessica-character-sheet`, `jessica-character-base`, or `jessica-portrait`.
 
@@ -175,9 +178,7 @@ Example:
     "basePrompt": "Give 6 cinematic shot ideas for this movie beat. Keep each idea practical for image-to-video generation, include subject action, camera motion, location, and emotional turn. Return concise bullets only.",
     "filenamePrefix": "<movie-slug>-script-help",
     "combineOutputs": "false"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 600
+  }
 }
 ```
 
@@ -241,9 +242,7 @@ Default PixelPig tool:
     "generations": "1",
     "aspectRatio": "16:9",
     "resolution": "2K"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -255,17 +254,15 @@ If using existing character/wardrobe references, use:
   "projectRoot": "<absolute project root>",
   "model": "openai/gpt-image-2/edit",
   "files": [
-    { "name": "character.png", "dataUri": "<data uri>" },
-    { "name": "wardrobe.png", "dataUri": "<data uri>" }
+    { "path": "<absolute character image path>" },
+    { "path": "<absolute wardrobe image path>" }
   ],
   "parameters": {
     "basePrompt": "<composite/edit prompt>",
     "generations": "1",
     "aspectRatio": "16:9",
     "resolution": "2K"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -301,16 +298,14 @@ PixelPig tool:
   "projectRoot": "<absolute project root>",
   "model": "openai/gpt-image-2/edit",
   "files": [
-    { "name": "approved-base.png", "dataUri": "<data uri>" }
+    { "path": "<absolute approved base image path>" }
   ],
   "parameters": {
     "basePrompt": "<6-panel sheet prompt>",
     "generations": "1",
     "aspectRatio": "16:9",
     "resolution": "2K"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -354,9 +349,7 @@ Default still workflow:
     "generations": "1",
     "aspectRatio": "16:9",
     "resolution": "2K"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -368,17 +361,15 @@ Reference-guided plate workflow:
   "projectRoot": "<absolute project root>",
   "model": "openai/gpt-image-2/edit",
   "files": [
-    { "name": "character-sheet.png", "dataUri": "<data uri>" },
-    { "name": "environment-ref.png", "dataUri": "<data uri>" }
+    { "path": "<absolute character sheet image path>" },
+    { "path": "<absolute environment reference image path>" }
   ],
   "parameters": {
     "basePrompt": "<scene plate prompt>",
     "generations": "1",
     "aspectRatio": "16:9",
     "resolution": "2K"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -413,9 +404,7 @@ Text-to-image detail:
     "aspectRatio": "3:2-2k",
     "quality": "medium",
     "outputFormat": "png"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -427,7 +416,7 @@ Reference-guided detail edit:
   "projectRoot": "<absolute project root>",
   "model": "openai/gpt-image-2/edit",
   "files": [
-    { "name": "reference.png", "dataUri": "<data uri>" }
+    { "path": "<absolute reference image path>" }
   ],
   "parameters": {
     "basePrompt": "<detail edit prompt>",
@@ -435,9 +424,7 @@ Reference-guided detail edit:
     "aspectRatio": "auto",
     "quality": "medium",
     "outputFormat": "png"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800
+  }
 }
 ```
 
@@ -472,10 +459,7 @@ Text-only shot:
     "aspectRatio": "16:9",
     "resolution": "720p",
     "generateAudio": "true"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800,
-  "pollSeconds": 10
+  }
 }
 ```
 
@@ -487,7 +471,7 @@ Image-to-video:
   "projectRoot": "<absolute project root>",
   "model": "bytedance/seedance-2.0/image-to-video",
   "files": [
-    { "name": "plate.png", "dataUri": "<data uri>" }
+    { "path": "<absolute scene plate image path>" }
   ],
   "parameters": {
     "prompt": "<Seedance motion prompt>",
@@ -495,14 +479,20 @@ Image-to-video:
     "aspectRatio": "16:9",
     "resolution": "720p",
     "generateAudio": "true"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800,
-  "pollSeconds": 10
+  }
 }
 ```
 
 Reference-to-video:
+
+Reference images are ordered string parameters, not extra `files[]` entries and not objects. Put reusable refs in `parameters.referenceImage1`, `parameters.referenceImage2`, etc. as absolute path strings. Use `files[]` only for the selected base/scene image that should become `@base` or `@scene`.
+
+If a reference-to-video run says it needs reference images, do not retry by moving those images into `files[]`. Keep them in `parameters.referenceImageN` and verify the names are exact.
+
+- `referenceImage1` maps to `@ref1`
+- `referenceImage2` maps to `@ref2`
+- `referenceImage3` maps to `@ref3`
+- `files[0]` maps to `@base` or `@scene` for Seedance reference prompts
 
 ```json
 {
@@ -510,19 +500,17 @@ Reference-to-video:
   "projectRoot": "<absolute project root>",
   "model": "bytedance/seedance-2.0/reference-to-video",
   "files": [
-    { "name": "character-sheet.png", "dataUri": "<data uri>" },
-    { "name": "scene-plate.png", "dataUri": "<data uri>" }
+    { "path": "<absolute scene plate image path>" }
   ],
   "parameters": {
-    "prompt": "Use @ref1 as the locked character reference and @ref2 as the environment/scene reference. <Seedance motion prompt>",
+    "referenceImage1": "<absolute character sheet image path>",
+    "referenceImage2": "<absolute prop or style reference image path>",
+    "prompt": "Use @ref1 as the locked character reference, @ref2 as the prop/style reference, and @scene as the scene plate. <Seedance motion prompt>",
     "durationSeconds": "5",
     "aspectRatio": "16:9",
     "resolution": "720p",
     "generateAudio": "true"
-  },
-  "waitForCompletion": true,
-  "maxWaitSeconds": 1800,
-  "pollSeconds": 10
+  }
 }
 ```
 
@@ -611,7 +599,7 @@ Do not include music, lyrics, artist names, soundtrack cues, or score language u
 
 ## Build The PixelPig Movie
 
-After a video workflow completes, use each returned video `outputs[].filePath` as a movie clip:
+After a video workflow task completes, use each video `outputs[].filePath` from `tasks/result` as a movie clip:
 
 ```json
 {
@@ -623,7 +611,7 @@ After a video workflow completes, use each returned video `outputs[].filePath` a
 }
 ```
 
-After an audio workflow completes, use each returned audio `outputs[].filePath` as an audio clip:
+After an audio workflow task completes, use each audio `outputs[].filePath` from `tasks/result` as an audio clip:
 
 ```json
 {
@@ -680,6 +668,7 @@ After rendering, attach the artifact:
 Before running a generation:
 
 - [ ] projectRoot resolved and will be passed to `pixelpig_run_workflow`
+- [ ] `pixelpig_run_workflow` will be called with `params.task`
 - [ ] current workflow/model verified with `pixelpig_describe_workflow`
 - [ ] character locked if character appears
 - [ ] single-image base exists before any 6-panel sheet
@@ -688,6 +677,6 @@ Before running a generation:
 - [ ] GPT Image 2 used for image generation and image edit workflows
 - [ ] prompt contains no names, brands, protected IP, age labels, or internal context
 - [ ] pre-run confirmation delivered and approved
-- [ ] returned outputs have `filePath`
+- [ ] `tasks/result` outputs have `filePath`
 
 Hard stop on failed/partial workflows unless the user explicitly chooses to continue with partial outputs.

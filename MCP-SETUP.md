@@ -44,11 +44,32 @@ Override it with `PIXELPIG_MCP_PORT` if needed.
   - `pixelpig_list_workflows`
   - `pixelpig_describe_workflow`
   - `pixelpig_run_workflow`
+  - `pixelpig_list_provider_tasks`
+  - `pixelpig_recover_workflow_output`
+  - `pixelpig_list_projects`
+  - `pixelpig_create_project`
+  - `pixelpig_list_project_movies`
+  - `pixelpig_get_project_movie`
+  - `pixelpig_get_movie_json_schema`
+  - `pixelpig_update_project_movie`
+  - `pixelpig_create_movie`
+  - `pixelpig_add_movie_clip`
+  - `pixelpig_add_movie_audio_clip`
+  - `pixelpig_prepare_hyperframes_workspace`
+  - `pixelpig_attach_hyperframes_layer`
+  - `pixelpig_list_collections`
+  - `pixelpig_get_collection`
+- Tasks:
+  - `tasks/get`
+  - `tasks/result`
+  - `tasks/list`
 - Resources:
   - `pixelpig://workflows`
   - `pixelpig://workflows/{workflowId}`
 
 Workflow discovery only shows providers that are configured on that machine. Model metadata also includes pricing hints and spicy `🌶️` moderation guidance when available.
+
+Workflow generation uses MCP Tasks. Call `pixelpig_run_workflow` as a task-augmented `tools/call` with `params.task`; the returned `task.taskId` is checked with `tasks/get`, and final workflow outputs are returned by `tasks/result`. The old workflow run polling tools are not part of the public MCP contract.
 
 ## Troubleshooting
 
