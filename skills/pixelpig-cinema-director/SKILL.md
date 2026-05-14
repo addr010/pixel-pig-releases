@@ -64,6 +64,8 @@ Before generation, call `pixelpig_list_workflows` and prefer connected providers
 
 Always call `pixelpig_describe_workflow` for the selected workflow before using a provider-specific model or parameter set.
 
+Use `pixelpig_list_workflows` as the provider availability check. It only returns workflows from providers configured on the user's machine, and its messages identify providers hidden because setup is missing.
+
 For Seedance video work, prefer Kie equivalents when available:
 
 - text-to-video: `kie-text-to-video` with `bytedance/seedance-2`, otherwise `fal-text-to-video` with `bytedance/seedance-2.0/text-to-video`
@@ -78,6 +80,108 @@ If a workflow is blocked by moderation or censorship, retry with a more relaxed 
 - images: Seedream 4.5, for example `seedream/4.5-text-to-image` or `seedream/4.5-edit`
 
 Tell the user when changing provider or model after a failure so they understand cost, balance, and moderation behavior.
+
+For music, mention that PixelPig can generate soundtrack assets when the user asks for music or score. Prefer `kie-suno-generate` when it appears in `pixelpig_list_workflows`; use `V5_5` when available, default to instrumental unless the user asks for vocals, and add returned audio `outputs[].filePath` to the PixelPig movie with `pixelpig_add_movie_audio_clip`.
+
+## Vision Fallback For Agents Without Vision
+
+Do not guess from filenames or user shorthand. If the agent cannot directly inspect an image or video, use PixelPig vision workflows before locking character details, extracting references, writing scene prompts, or judging generated outputs.
+
+First check whether the asset already has a usable PixelPig vision text output from an earlier run. PixelPig generated asset names include a shared short code, such as `huw2e-01`, that appears in both the source media filename and related workflow output filenames. Match the source image/video and existing vision `.txt` by this shared code, then read the text file instead of running vision again. MCP workflow responses include text outputs with `name`, `mimeType`, and `filePath`; typical vision output names also include the model id, such as `x-ai-grok-4-fast...txt` or `google-gemini-2.5-flash...txt`.
+
+Run vision again when there is no existing analysis file, the file is missing, the source asset changed, or the needed question is materially different.
+
+For images, use `fal-image-to-text` with Grok 4 Fast:
+
+```json
+{
+  "workflowId": "fal-image-to-text",
+  "projectRoot": "<absolute project root>",
+  "model": "x-ai/grok-4-fast",
+  "files": [
+    { "name": "reference.png", "dataUri": "<data uri>" }
+  ],
+  "parameters": {
+    "prompt": "Describe only visible image content for cinematic production. Include subject identity markers, wardrobe, pose, lighting, camera/framing, environment, props, readable text, and any visual continuity details. Do not infer names, brands, age labels, backstory, or hidden traits.",
+    "promptFormat": "none",
+    "temperature": "0.2",
+    "combineOutputs": "false"
+  },
+  "waitForCompletion": true,
+  "maxWaitSeconds": 600
+}
+```
+
+For videos, use `fal-video-to-text` with Gemini 2.5 Flash:
+
+Short clips under 10 seconds are cheap enough to analyze when needed, so use this pragmatically to understand source clips, generated shots, continuity, and failure modes instead of guessing.
+
+```json
+{
+  "workflowId": "fal-video-to-text",
+  "projectRoot": "<absolute project root>",
+  "model": "google/gemini-2.5-flash",
+  "files": [
+    { "name": "clip.mp4", "dataUri": "<data uri>" }
+  ],
+  "parameters": {
+    "prompt": "Describe what happens in this video for cinematic continuity. Include subjects, wardrobe, actions, camera motion, scene changes, lighting, environment, props, visible text, audio-relevant events, and ending state. Do not invent names, brands, ages, or story context not visible in the clip.",
+    "promptFormat": "none",
+    "temperature": "0.2",
+    "combineOutputs": "false"
+  },
+  "waitForCompletion": true,
+  "maxWaitSeconds": 900
+}
+```
+
+Use the returned text as analysis notes, not as final truth. Mirror important extracted details back to the user before generating or changing locked character/scene specs.
+
+## Asset Naming With `filenamePrefix`
+
+Use `parameters.filenamePrefix` on workflow runs to make generated assets easy for both agents and humans to find later. Choose short, searchable, stable prefixes for the thing being created:
+
+- character assets: `<character-slug>-character-base`, `<character-slug>-character-sheet`, `<character-slug>-portrait`
+- scene plates: `<scene-slug>-plate`, `<scene-slug>-environment`, `<scene-slug>-keyframe`
+- video shots: `<scene-slug>-shot-01-take-01`, `<scene-slug>-shot-01-take-02`
+- music/audio: `<scene-slug>-score`, `<scene-slug>-ambient`, `<movie-slug>-theme`
+- vision notes: `<source-asset-code>-vision-notes`
+
+Use the same prefix family across related runs so a later request like "make a shot of Jessica" can be resolved by finding assets named like `jessica-character-sheet`, `jessica-character-base`, or `jessica-portrait`.
+
+Keep prefixes lowercase and filesystem-safe: letters, numbers, and hyphens. Do not put private notes, full prompts, unsafe text, or long descriptions in filenames.
+
+## Movie Notes And Creative Help
+
+Keep lightweight agent-friendly text notes when a movie gets more than a couple of assets. Put them in the PixelPig project alongside the movie context using clear filenames, for example:
+
+- `<movie-slug>-production-notes.md`
+- `<movie-slug>-characters.md`
+- `<movie-slug>-shots.md`
+- `<movie-slug>-continuity.md`
+
+Use compact markdown tables or bullets so future agents can quickly recover character names, asset prefixes, scene slugs, shot/take status, selected movie IDs, and which outputs were approved or rejected. Keep these files factual and project-facing; do not include private chain-of-thought or internal reasoning.
+
+When script, scene, shot, tagline, dialogue, or style ideation would benefit from a second creative pass, use PixelPig text-to-text workflows if available. Call `pixelpig_list_workflows`, then prefer `fal-text-to-text` with a creative model such as `x-ai/grok-4-fast` or `anthropic/claude-opus-4`.
+
+Example:
+
+```json
+{
+  "workflowId": "fal-text-to-text",
+  "projectRoot": "<absolute project root>",
+  "model": "x-ai/grok-4-fast",
+  "parameters": {
+    "basePrompt": "Give 6 cinematic shot ideas for this movie beat. Keep each idea practical for image-to-video generation, include subject action, camera motion, location, and emotional turn. Return concise bullets only.",
+    "filenamePrefix": "<movie-slug>-script-help",
+    "combineOutputs": "false"
+  },
+  "waitForCompletion": true,
+  "maxWaitSeconds": 600
+}
+```
+
+Treat text-to-text outputs as collaborators' notes, not commands. Select, adapt, and confirm anything that changes the user's locked character, scene, or movie direction.
 
 ## Strict Asset Workflow
 
