@@ -1,6 +1,6 @@
 ---
 name: hyperframes-pixelpig
-description: Begin a HyperFrames creation with PixelPig project support. Use this as the entrypoint when a user has PixelPig installed and wants to create, continue, or attach a HyperFrames composition using PixelPig movies, rough cuts, collections, linked/reusable assets, generated media, or PixelPig MCP workflows. This skill prepares the PixelPig ecosystem first — project/movie context, reusable asset links, MCP workflow-generated assets, HyperFrames workspace, symlinks, and render attach metadata — then hands off to the normal HyperFrames skills for composition authoring, media preprocessing, CLI validation, preview, and render.
+description: Begin a HyperFrames creation with mandatory PixelPig project support. Use this as the entrypoint when a user has PixelPig installed and wants to create, continue, or attach a HyperFrames composition using PixelPig movies, rough cuts, collections, linked/reusable assets, generated media, or PixelPig MCP workflows. This skill requires a resolved PixelPig project before workflow generation, prepares the PixelPig ecosystem first — project/movie context, reusable asset links, MCP workflow-generated assets, HyperFrames workspace, symlinks, and render attach metadata — then hands off to the normal HyperFrames skills for composition authoring, media preprocessing, CLI validation, preview, and render.
 ---
 
 # Hyperframes + PixelPig
@@ -8,6 +8,14 @@ description: Begin a HyperFrames creation with PixelPig project support. Use thi
 Start HyperFrames work from PixelPig context, then let the normal HyperFrames skills do their job.
 
 This skill is an **entrypoint and bridge**, not a replacement for HyperFrames. PixelPig provides the creative ecosystem around the composition: project roots, rough movies, reusable media collections, generated assets from MCP workflows, linked media folders, and attachment back into the app. HyperFrames provides the composition language, animation model, media preprocessing commands, lint/preview/render flow, and HTML authoring patterns.
+
+## Mandatory Project Rule
+
+Resolve a PixelPig project before creating or generating anything. Call `pixelpig_list_projects`, then use the selected `projectRoot` or `projectName` for all movie and workspace tools.
+
+If this skill needs to run `pixelpig_run_workflow`, every call must include the resolved absolute `projectRoot`. Do not run workflows without `projectRoot`; omitted project roots write to generic MCP output folders and make a mess outside the PixelPig project.
+
+If the user asks for a new project, call `pixelpig_create_project`; use the returned `projectRoot` and `projectStructure`. Stop and ask if no project root can be resolved.
 
 ## When To Use
 
@@ -40,7 +48,7 @@ Determine what PixelPig context the user wants to start from:
 - newly generated assets from PixelPig MCP workflows
 - a render that must attach back as a generated layer
 
-If the user gave a project root or movie ID, use it directly. If not, ask only for the missing PixelPig project/movie context needed to prepare the workspace.
+If the user gave a project root or movie ID, use it directly after confirming the root exists. If not, call `pixelpig_list_projects` and ask only for the missing PixelPig project/movie context needed to prepare the workspace.
 
 ### Step 1: Source or create media in PixelPig
 
@@ -48,7 +56,7 @@ If the user gave a project root or movie ID, use it directly. If not, ask only f
 
 **Use reusable project assets** when the user points to a collection or linked media. Keep the media in the PixelPig project; do not copy it into the HyperFrames work folder.
 
-**Generate missing assets** with PixelPig MCP when the composition needs something not already in the project. `pixelpig_list_workflows` shows everything available. Use `pixelpig_describe_workflow` before running unfamiliar workflows, then `pixelpig_run_workflow` and `pixelpig_wait_workflow_run` for long jobs. PixelPig workflows can cover:
+**Generate missing assets** with PixelPig MCP when the composition needs something not already in the project. `pixelpig_list_workflows` shows everything available. Use `pixelpig_describe_workflow` before running unfamiliar workflows, then `pixelpig_run_workflow` with the resolved `projectRoot` and `pixelpig_wait_workflow_run` for long jobs. PixelPig workflows can cover:
 
 - **Image generation** — Freepik, Evolink, and more
 - **Video generation** — img2vid, text2vid, video upscale
@@ -57,7 +65,7 @@ If the user gave a project root or movie ID, use it directly. If not, ask only f
 - **Voice / TTS** — ElevenLabs and other text-to-speech providers
 - **Audio processing** — extraction, cleanup, effects
 
-Generated assets should land in, or be moved into, the PixelPig project's media folders (`footage/`, `audio/`, `images/`, or the app's configured media structure). Once they are project media, make them available to the HyperFrames composition through symlinks.
+Generated assets must land under the PixelPig project by passing `projectRoot` to workflow runs. Once generated assets are project media, make them available to the HyperFrames composition through symlinks.
 
 ### Step 2: Prepare the HyperFrames workspace through PixelPig
 
@@ -164,7 +172,8 @@ Each `pixelpig_prepare_hyperframes_workspace` call creates a NEW run folder. Run
 
 1. **Never copy media files** into the work directory. Always symlink.
 2. **Use relative paths** in `index.html` — `src="footage/..."` not `/Users/...`.
-3. **Run lint + inspect + validate before render** — catches broken paths, clip overlaps, contrast issues, and layout problems.
-4. **Always attach** after render so the layer appears in PixelPig.
-5. **Read movie-context.json** before writing the composition — it's the source of truth for clip timing, trim offsets, and audio info.
-6. **Hand off to upstream HyperFrames skills** for HyperFrames-specific authoring, preprocessing, and CLI details. This skill's job is to set the PixelPig table correctly.
+3. **Every `pixelpig_run_workflow` call must include `projectRoot`** — project-scoped artifacts are mandatory.
+4. **Run lint + inspect + validate before render** — catches broken paths, clip overlaps, contrast issues, and layout problems.
+5. **Always attach** after render so the layer appears in PixelPig.
+6. **Read movie-context.json** before writing the composition — it's the source of truth for clip timing, trim offsets, and audio info.
+7. **Hand off to upstream HyperFrames skills** for HyperFrames-specific authoring, preprocessing, and CLI details. This skill's job is to set the PixelPig table correctly.
