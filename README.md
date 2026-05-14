@@ -56,6 +56,28 @@ Pixel Pig releases now include a bundled MCP server for local AI tools such as C
 
 Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
+### 🎬 HyperFrames Skill for Pixel Pig
+
+Pixel Pig ships an agent skill that helps AI coding agents begin HyperFrames compositions with Pixel Pig project support. Use it when you want an agent to start from a Pixel Pig movie, rough cut, reusable asset collection, linked project media, or Pixel Pig MCP-generated assets, then attach the rendered HyperFrames layer back to Pixel Pig.
+
+Install the Pixel Pig skill:
+
+```bash
+npx skills add addr010/pixel-pig-releases
+```
+
+HyperFrames itself provides the composition, animation, media preprocessing, and render workflow skills. Install those too:
+
+```bash
+npx skills add heygen-com/hyperframes
+```
+
+Then start Pixel Pig-aware video work by explicitly invoking the Pixel Pig bridge skill in your agent:
+
+> Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig project and attach the finished render back to the movie.
+
+The Pixel Pig skill prepares the project context, MCP workflow assets, symlinks, and attach-back metadata first. It then hands off to the normal HyperFrames skills (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-media`) for authoring, validation, preview, and render.
+
 ### 🔧 FFmpeg Requirement
 
 Pixel Pig’s audio and video combine features require **FFmpeg** to be installed on your system. These tools will not appear unless FFmpeg is available in your PATH.
