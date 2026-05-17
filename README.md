@@ -60,7 +60,7 @@ Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
 Pixel Pig ships agent skills that help AI coding agents use Pixel Pig MCP as an organized production workspace.
 
-- `/pixelpig-cinema-director` creates cinematic assets and rough movies with Pixel Pig MCP, including GPT Image 2 and Seedance workflow task runs.
+- `/pixelpig-cinema-director` creates cinematic assets and rough movies with Pixel Pig MCP, including GPT Image 2 and Seedance workflow runs.
 - `/hyperframes-pixelpig` begins a HyperFrames composition from a Pixel Pig project/movie and attaches the finished render back to Pixel Pig.
 
 Both skills require a Pixel Pig project before generation so workflow artifacts land inside the project instead of generic downloads.
