@@ -18,7 +18,7 @@ Before calling `pixelpig_run_workflow`:
 3. If the user asks for a new project, call `pixelpig_create_project`; use the returned `projectRoot` and `projectStructure`.
 4. Stop and ask if no project can be resolved.
 
-Never call `pixelpig_run_workflow` without `projectRoot`. Project-root workflow tasks handle organized artifact placement.
+Never call `pixelpig_run_workflow` without `projectRoot`. Project-root workflow runs handle organized artifact placement.
 
 Use PixelPig movies as production state. Collections are optional inputs only when the user explicitly points to an asset pack.
 
@@ -41,15 +41,12 @@ Workflow generation:
 - `pixelpig_list_workflows`
 - `pixelpig_describe_workflow`
 - `pixelpig_run_workflow`
-- `tasks/get`
-- `tasks/result`
-- `tasks/list`
+- `pixelpig_get_workflow_run`
+- `pixelpig_get_mcp_status`
 
 For workflow inputs, pass existing local files with `files[].path`. PixelPig workflow code handles provider upload and transport internally.
 
-Workflow generation is MCP task-native. Call `pixelpig_run_workflow` as a task-augmented `tools/call` with `params.task`, keep the returned `task.taskId`, poll `tasks/get` using the server-provided `pollInterval`, then call `tasks/result` to get final workflow outputs. Do not add legacy wait options such as `waitForCompletion`, `maxWaitSeconds`, or `pollSeconds`.
-
-When examples below show workflow JSON, that JSON is the `arguments` object for the task-augmented `pixelpig_run_workflow` call. The MCP request wrapper must include `params.task`.
+Call `pixelpig_run_workflow` once, keep the returned `runId`, then poll `pixelpig_get_workflow_run` until it returns completed outputs. Image workflows usually take 15-240 seconds; video workflows usually take at least 1 minute per 5 seconds of generated video.
 
 HyperFrames handoff:
 
@@ -88,7 +85,7 @@ If a workflow is blocked by moderation or censorship, retry with a more relaxed 
 
 Tell the user when changing provider or model after a failure so they understand cost, balance, and moderation behavior.
 
-For music, mention that PixelPig can generate soundtrack assets when the user asks for music or score. Prefer `kie-suno-generate` when it appears in `pixelpig_list_workflows`; use `V5_5` when available, default to instrumental unless the user asks for vocals, and add audio `outputs[].filePath` from `tasks/result` to the PixelPig movie with `pixelpig_add_movie_audio_clip`.
+For music, mention that PixelPig can generate soundtrack assets when the user asks for music or score. Prefer `kie-suno-generate` when it appears in `pixelpig_list_workflows`; use `V5_5` when available, default to instrumental unless the user asks for vocals, and add returned audio `outputs[].filePath` to the PixelPig movie with `pixelpig_add_movie_audio_clip`.
 
 ## Vision Fallback For Agents Without Vision
 
@@ -142,7 +139,7 @@ Use the returned text as analysis notes, not as final truth. Mirror important ex
 
 ## Asset Naming With `filenamePrefix`
 
-Use `parameters.filenamePrefix` on workflow task runs to make generated assets easy for both agents and humans to find later. Choose short, searchable, stable prefixes for the thing being created:
+Use `parameters.filenamePrefix` on workflow runs to make generated assets easy for both agents and humans to find later. Choose short, searchable, stable prefixes for the thing being created:
 
 - character assets: `<character-slug>-character-base`, `<character-slug>-character-sheet`, `<character-slug>-portrait`
 - scene plates: `<scene-slug>-plate`, `<scene-slug>-environment`, `<scene-slug>-keyframe`
@@ -599,7 +596,7 @@ Do not include music, lyrics, artist names, soundtrack cues, or score language u
 
 ## Build The PixelPig Movie
 
-After a video workflow task completes, use each video `outputs[].filePath` from `tasks/result` as a movie clip:
+After a video workflow completes, use each returned video `outputs[].filePath` as a movie clip:
 
 ```json
 {
@@ -611,7 +608,7 @@ After a video workflow task completes, use each video `outputs[].filePath` from 
 }
 ```
 
-After an audio workflow task completes, use each audio `outputs[].filePath` from `tasks/result` as an audio clip:
+After an audio workflow completes, use each returned audio `outputs[].filePath` as an audio clip:
 
 ```json
 {
@@ -668,7 +665,6 @@ After rendering, attach the artifact:
 Before running a generation:
 
 - [ ] projectRoot resolved and will be passed to `pixelpig_run_workflow`
-- [ ] `pixelpig_run_workflow` will be called with `params.task`
 - [ ] current workflow/model verified with `pixelpig_describe_workflow`
 - [ ] character locked if character appears
 - [ ] single-image base exists before any 6-panel sheet
@@ -677,6 +673,6 @@ Before running a generation:
 - [ ] GPT Image 2 used for image generation and image edit workflows
 - [ ] prompt contains no names, brands, protected IP, age labels, or internal context
 - [ ] pre-run confirmation delivered and approved
-- [ ] `tasks/result` outputs have `filePath`
+- [ ] returned outputs have `filePath`
 
 Hard stop on failed/partial workflows unless the user explicitly chooses to continue with partial outputs.
