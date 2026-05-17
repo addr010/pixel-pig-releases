@@ -11,7 +11,16 @@ Build cinematic image assets, video shots, and rough movies through PixelPig MCP
 
 Pixel Pig MCP setup instructions are at https://github.com/addr010/pixel-pig-releases/blob/main/MCP-SETUP.md.
 
-If the Pixel Pig MCP tools are not available, tell the user to follow that page. The fast path is usually to open Pixel Pig and connect the agent to `http://127.0.0.1:7361/mcp`; clients that support `stdio` can launch the bundled `PixelPig.McpServer --stdio` instead.
+If the Pixel Pig MCP tools are not available, do the setup for the user when your agent environment allows it. Do not make the user edit config files by hand.
+
+Fast setup paths:
+
+- If Pixel Pig is open, connect the MCP client to `http://127.0.0.1:7361/mcp`.
+- If the client supports `stdio`, configure it to launch the bundled server:
+  - macOS: `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio`
+  - Windows: `C:\Path\To\PixelPig\PixelPig.McpServer.exe --stdio`
+
+After setup, verify with real MCP tools: call `pixelpig_get_mcp_status` or `pixelpig_list_projects`. Ask the user only when you cannot find the Pixel Pig install path, the client requires a restart you cannot perform, or the current environment does not permit config changes.
 
 ## Non-Negotiable PixelPig Project Rule
 
