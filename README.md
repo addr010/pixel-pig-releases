@@ -83,7 +83,7 @@ Example prompts:
 
 > Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig project and attach the finished render back to the movie.
 
-The Pixel Pig skills expect the Pixel Pig MCP server to be available. If Pixel Pig is open, the bundled MCP server is normally already running.
+The Pixel Pig skills need the Pixel Pig MCP server. The easy path is to open Pixel Pig and connect to `http://127.0.0.1:7361/mcp`; `stdio` clients can launch `PixelPig.McpServer --stdio` without keeping the app open. See [MCP-SETUP.md](MCP-SETUP.md).
 
 ### 🔧 FFmpeg Requirement
 
