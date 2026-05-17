@@ -7,6 +7,12 @@ description: "Use Pixel Pig MCP to create cinematic assets, character references
 
 Build cinematic image assets, video shots, and rough movies through PixelPig MCP. Keep generated assets inside the resolved PixelPig project, add usable video/audio outputs to PixelPig movies, and prepare HyperFrames workspace context when the user wants a finished composition.
 
+## User Setup
+
+Pixel Pig MCP setup instructions are at https://github.com/addr010/pixel-pig-releases/blob/main/MCP-SETUP.md.
+
+If the Pixel Pig MCP tools are not available, tell the user to follow that page. The fast path is usually to open Pixel Pig and connect the agent to `http://127.0.0.1:7361/mcp`; clients that support `stdio` can launch the bundled `PixelPig.McpServer --stdio` instead.
+
 ## Non-Negotiable PixelPig Project Rule
 
 Every generation workflow must run with an explicit PixelPig `projectRoot`.
