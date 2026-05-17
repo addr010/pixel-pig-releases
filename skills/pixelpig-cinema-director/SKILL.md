@@ -1,6 +1,6 @@
 ---
 name: pixelpig-cinema-director
-description: PixelPig MCP cinematic production director for GPT Image 2, Seedance 2.0, PixelPig movies, and HyperFrames finishing. Use for character outfit references, 6-panel character sheets, model sheets, scene/environment plates, cinematic stills, Seedance video shots, AI-generated rough movies, and PixelPig-to-HyperFrames workflows. Enforces a strict project-first and asset-order workflow: resolve a PixelPig project, lock character identity, generate a single-image base reference before any character sheet, generate 6-panel sheets as one image, create scene plates only when requested, run all generation through PixelPig MCP with projectRoot, add video/audio outputs to PixelPig movies, then hand off to HyperFrames when needed.
+description: "Use Pixel Pig MCP to create cinematic assets, character references, video shots, rough movies, and HyperFrames handoffs inside a Pixel Pig project."
 ---
 
 # PixelPig Cinema Director
