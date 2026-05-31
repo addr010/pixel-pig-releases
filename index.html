@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Pig | Free AI Media Creator Workbench</title>
-    <meta name="description" content="Pixel Pig is a free desktop workbench for AI media creators. Run supported model workflows through providers with better batching, prompts, files and outputs.">
+    <meta name="description" content="Pixel Pig is a free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Keep prompts, batches, files, downloads, and outputs organised across the AI tools you already use.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.pixelpig.net/">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta property="og:title" content="Pixel Pig | Free AI Media Creator Workbench">
-    <meta property="og:description" content="A free desktop workbench for running supported AI media workflows through providers with better batching, prompts, files and outputs.">
+    <meta property="og:description" content="One studio, not fifteen tabs. A free desktop workbench for AI media creators — keep prompts, batches, files, and outputs organised across the AI tools you use.">
     <meta property="og:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
     <meta property="og:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
     <meta property="og:url" content="https://www.pixelpig.net/">
@@ -18,7 +18,7 @@
     <meta property="og:site_name" content="Pixel Pig">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Pixel Pig | Free AI Media Creator Workbench">
-    <meta name="twitter:description" content="A free desktop workbench for running supported AI media workflows through providers with better batching, prompts, files and outputs.">
+    <meta name="twitter:description" content="One studio, not fifteen tabs. A free desktop workbench for AI media creators — keep prompts, batches, files, and outputs organised across the AI tools you use.">
     <meta name="twitter:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
     <meta name="twitter:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
     <script type="application/ld+json">
@@ -31,7 +31,7 @@
         "logo": "https://www.pixelpig.net/pixel-pig-512.png",
         "image": "https://www.pixelpig.net/pixel-pig-work.webp",
         "screenshot": "https://www.pixelpig.net/pixel-pig-work.webp",
-        "description": "Pixel Pig is a free desktop workbench for AI media creators. Run supported model workflows through providers with better batching, prompts, files and outputs.",
+        "description": "Pixel Pig is a free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Keep prompts, batches, files, downloads, and outputs organised across the AI tools you already use.",
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "AI media workflow tool",
         "operatingSystem": "Windows 10/11, macOS 11 or later",
@@ -245,6 +245,8 @@
             padding: 34px 34px 30px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .hero-copy::after {
@@ -292,10 +294,27 @@
             margin-bottom: 20px;
         }
 
+        .hero-lead {
+            margin-bottom: 20px;
+            max-width: 32rem;
+        }
+
+        .hero-lead span {
+            display: block;
+            font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+            font-weight: 800;
+            line-height: 1.22;
+            color: var(--text);
+        }
+
+        .hero-lead span + span {
+            margin-top: 4px;
+        }
+
         .lede {
             max-width: 38rem;
-            font-size: 1.14rem;
-            color: #d4d2cb;
+            font-size: 1.05rem;
+            color: var(--muted);
             margin-bottom: 26px;
         }
 
@@ -351,7 +370,8 @@
         .hero-notes {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
+            gap: 14px;
+            margin-bottom: 28px;
         }
 
         .hero-note {
@@ -411,12 +431,28 @@
             background: linear-gradient(180deg, #1b1f1e 0%, #0e1110 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+            flex: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .screen-frame picture {
+            flex: 1;
+            display: block;
+            min-height: 0;
         }
 
         .screen-frame picture,
         .screen-frame img {
             border-radius: 16px;
             overflow: hidden;
+        }
+
+        .screen-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
         }
 
         .visual-caption {
@@ -467,6 +503,10 @@
             font-size: clamp(2rem, 4vw, 3.35rem);
             margin-bottom: 14px;
             max-width: 11ch;
+        }
+
+        .panel-main h2 {
+            max-width: 20ch;
         }
 
         .section-copy {
@@ -897,28 +937,17 @@
         <main id="top">
             <section class="hero">
                 <div class="hero-copy fade-up delay-1">
-                    <div class="eyebrow">For creators who want more control than web apps give them</div>
-                    <h1>More control over the models you care about.</h1>
+                    <div class="eyebrow">For AI projects that have outgrown one web app</div>
+                    <h1>One studio, not fifteen tabs.</h1>
+                    <div class="hero-lead">
+                        <span>Stop jumping between websites to generate your assets.</span>
+                        <span>Stop wasting money on subscriptions and credits.</span>
+                    </div>
                     <p class="lede">
-                        Pixel Pig is a free desktop workbench for AI media creators who love tools like Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI, but want more control over prompts, batches, files, downloads, outputs, and comparisons. It connects to supported providers like Fal, Replicate, Kie.ai, and ComfyUI so you can run repeatable workflows from one desktop app.
+                        A free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Generate images, video, lip sync, upscaling, and sound in one place — every model running on your own provider keys (Fal, Replicate, Kie.ai, ComfyUI).
                     </p>
                     <div class="hero-actions">
                         <a class="button" href="#download">Download latest release</a>
-                        <a class="button-secondary" href="https://github.com/addr010/pixel-pig-releases/issues">Report an issue</a>
-                    </div>
-                    <div class="hero-notes" aria-label="Product highlights">
-                        <div class="hero-note">
-                            <strong>Familiar model types</strong>
-                            <span>Image, video, audio, speech, and 3D workflows like the ones creators already use.</span>
-                        </div>
-                        <div class="hero-note">
-                            <strong>Provider-powered</strong>
-                            <span>Use supported Fal, Replicate, Kie.ai, and ComfyUI connections to run jobs directly.</span>
-                        </div>
-                        <div class="hero-note">
-                            <strong>Donation-ware</strong>
-                            <span>Free to use. If it earns you money, kick something back.</span>
-                        </div>
                     </div>
                 </div>
 
@@ -935,44 +964,59 @@
                     </div>
                     <div class="visual-caption">
                         <div>
-                            <span class="meta-label">Use it for</span>
-                            <strong>Batch generation</strong>
+                            <span class="meta-label">Generate</span>
+                            <strong>Image · video · audio</strong>
                         </div>
                         <div>
-                            <span class="meta-label">Also includes</span>
-                            <strong>Media handling tools</strong>
+                            <span class="meta-label">Built in</span>
+                            <strong>Movie editor</strong>
                         </div>
                         <div>
-                            <span class="meta-label">Approach</span>
-                            <strong>Workflow over hype</strong>
+                            <span class="meta-label">Organise</span>
+                            <strong>Prompts · files · batches</strong>
                         </div>
                     </div>
                 </aside>
             </section>
 
+            <div class="hero-notes fade-up delay-2" aria-label="Product highlights">
+                <div class="hero-note">
+                    <strong>One studio</strong>
+                    <span>Pick the model that fits the shot, not whatever one subscription forces.</span>
+                </div>
+                <div class="hero-note">
+                    <strong>Your own keys</strong>
+                    <span>Runs on your Fal, Replicate, Kie.ai, and ComfyUI accounts — no markup.</span>
+                </div>
+                <div class="hero-note">
+                    <strong>Donation-ware</strong>
+                    <span>Free to use. If it earns you money, kick something back.</span>
+                </div>
+            </div>
+
             <section class="manifest" id="why">
                 <div class="panel panel-main fade-up delay-2">
                     <span class="pill">Why it exists</span>
-                    <h2>Creator tools are familiar. Provider workflows give you control.</h2>
+                    <h2>AI creation is fun. AI production gets messy.</h2>
                     <p class="section-copy">
-                        Many AI creator tools are built around model workflows that are also available through providers. Pixel Pig gives you a desktop place to run supported workflows directly, reuse prompts, batch variations, collect outputs, and keep generated files organised locally.
+                        Models move fast — this week wins on motion, next week on faces, then prices change again. For quick tests, web apps are fine. But a longer project turns into scattered downloads, lost prompts, expiring credits, and outputs no one can trace. Pixel Pig is built for that mess. It rolls in data, not mud.
                     </p>
                     <div class="signal-grid">
                         <article class="signal">
-                            <h3>Use familiar model types</h3>
-                            <p>Run image, video, audio, speech, and 3D workflows like the ones creators already use across Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI.</p>
+                            <h3>Outgrow one web app</h3>
+                            <p>Pick the model that fits the shot — image, video, audio, speech, and 3D — like the work creators already do across Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI.</p>
                         </article>
                         <article class="signal">
-                            <h3>Connect through providers</h3>
-                            <p>Use supported Fal, Replicate, Kie.ai, and ComfyUI connections so Pixel Pig can run jobs directly instead of sending you through a dozen web apps.</p>
+                            <h3>Track the creative trail</h3>
+                            <p>Keep prompts, source images, settings, and outputs easy to follow from idea to final edit. No more folders of mystery filenames.</p>
                         </article>
                         <article class="signal">
-                            <h3>More control per run</h3>
-                            <p>Batch prompts, variants, aspect ratios, inputs, and model settings without rebuilding the same job over and over.</p>
+                            <h3>Batch the boring stuff</h3>
+                            <p>Run variations, aspect ratios, and prompt tests without rebuilding the same job over and over.</p>
                         </article>
                         <article class="signal">
-                            <h3>Keep the work organised</h3>
-                            <p>Handle uploads, downloads, generated files, comparisons, and local media tools from one desktop app.</p>
+                            <h3>Keep files local</h3>
+                            <p>Download, compare, crop, convert, and extract frames without leaving the app.</p>
                         </article>
                     </div>
                 </div>
@@ -983,19 +1027,25 @@
                         <article class="timeline-item">
                             <div>
                                 <h3>Concept passes</h3>
-                                <p>Test the same prompt across multiple image models, compare outputs, and keep only the real contenders.</p>
+                                <p>Test one prompt across multiple image models, compare, and keep only the contenders.</p>
                             </div>
                         </article>
                         <article class="timeline-item">
                             <div>
                                 <h3>Video iteration</h3>
-                                <p>Move from stills to image-to-video ideas without losing the prompt, source image, and final output trail.</p>
+                                <p>Move from stills to image-to-video without losing the prompt and source trail.</p>
                             </div>
                         </article>
                         <article class="timeline-item">
                             <div>
                                 <h3>Asset wrangling</h3>
-                                <p>Sort outputs, prep files, convert formats, and keep the boring parts from clogging the creative work.</p>
+                                <p>Sort outputs, prep files, and convert formats so the boring parts stay out of the way.</p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <div>
+                                <h3>Final polish</h3>
+                                <p>Combine clips and add audio with FFmpeg bundled in — no separate editor required.</p>
                             </div>
                         </article>
                     </div>
@@ -1005,50 +1055,29 @@
             <section class="video-section" id="watch">
                 <div class="section-head fade-up">
                     <div>
-                        <span class="pill">Watch Pixel Pig</span>
-                        <h2>See the app in motion.</h2>
+                        <span class="pill">Watch</span>
+                        <h2>See it in motion.</h2>
                     </div>
-                    <p>Short videos showing the app, the interface, and common creator workflows.</p>
                 </div>
                 <div class="video-grid">
                     <article class="video-card fade-up delay-1">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/3qad1fzvSnY?rel=0&amp;modestbranding=1" title="Pixel Pig walkthrough video 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-copy">
-                            <span class="mini-label">Walkthrough</span>
-                            <h3>General product overview</h3>
-                            <p>A broad look at the desktop workflow and what the app is trying to solve.</p>
+                            <iframe src="https://www.youtube.com/embed/3qad1fzvSnY?rel=0&amp;modestbranding=1" title="Pixel Pig video 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </article>
                     <article class="video-card fade-up delay-2">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/qEzzg2ZLwrk?rel=0&amp;modestbranding=1" title="Pixel Pig walkthrough video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-copy">
-                            <span class="mini-label">Workflow</span>
-                            <h3>Using Pixel Pig in practice</h3>
-                            <p>Less pitch, more actual usage: prompts, runs, results, and iteration.</p>
+                            <iframe src="https://www.youtube.com/embed/qEzzg2ZLwrk?rel=0&amp;modestbranding=1" title="Pixel Pig video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </article>
                     <article class="video-card fade-up delay-2">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/GWSn4FBYzNc?rel=0&amp;modestbranding=1" title="Pixel Pig walkthrough video 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-copy">
-                            <span class="mini-label">Creator view</span>
-                            <h3>Why a desktop tool matters</h3>
-                            <p>Where the app helps when the work gets repetitive, fragmented, or annoying.</p>
+                            <iframe src="https://www.youtube.com/embed/GWSn4FBYzNc?rel=0&amp;modestbranding=1" title="Pixel Pig video 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </article>
                     <article class="video-card fade-up delay-3">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/Y2YYwe4aTfc?rel=0&amp;modestbranding=1" title="Pixel Pig walkthrough video 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-copy">
-                            <span class="mini-label">Deep dive</span>
-                            <h3>More detail for curious people</h3>
-                            <p>For anyone deciding whether Pixel Pig fits an existing production workflow.</p>
+                            <iframe src="https://www.youtube.com/embed/Y2YYwe4aTfc?rel=0&amp;modestbranding=1" title="Pixel Pig video 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </article>
                 </div>
@@ -1060,7 +1089,6 @@
                         <div>
                             <span class="pill">Latest releases</span>
                             <h2>Download the current build.</h2>
-                            <p>The page pulls directly from GitHub Releases. Stable and prerelease builds appear here with platform-specific download buttons when assets are available.</p>
                         </div>
                         <a class="button-secondary" href="https://github.com/addr010/pixel-pig-releases/releases">Open all releases</a>
                     </div>
@@ -1077,13 +1105,13 @@
             <section class="support">
                 <div class="section-head fade-up">
                     <div>
-                        <span class="pill">Notes before you install</span>
-                        <h2>Before you download.</h2>
+                        <span class="pill">Heads up</span>
+                        <h2>Before you install.</h2>
                     </div>
                 </div>
                 <div class="support-grid">
                     <article class="support-card fade-up delay-1">
-                        <h3>System reality</h3>
+                        <h3>Requirements</h3>
                         <ul>
                             <li>Windows 10/11, 64-bit.</li>
                             <li>macOS 11 or later, Apple Silicon.</li>
@@ -1097,10 +1125,10 @@
                         </ul>
                     </article>
                     <article class="support-card fade-up delay-3">
-                        <h3>Provider setup</h3>
+                        <h3>Provider keys</h3>
                         <ul>
-                            <li>Set up a supported Fal, Replicate, Kie.ai, or ComfyUI connection before running model workflows.</li>
-                            <li>Open an issue if a needed model is missing.</li>
+                            <li>Add a Fal, Replicate, Kie.ai, or ComfyUI key before you generate.</li>
+                            <li>Open an issue if a model you need is missing.</li>
                         </ul>
                     </article>
                 </div>
