@@ -3,17 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Pig | Desktop AI Workflow Studio</title>
-    <meta name="description" content="Pixel Pig is a desktop AI workflow studio for Windows and macOS. Run image, video, audio, speech, and 3D workflows from one place without browser-tab chaos.">
-    <meta property="og:title" content="Pixel Pig | Desktop AI Workflow Studio">
-    <meta property="og:description" content="A desktop studio for serious AI workflow work across image, video, audio, speech, and 3D models.">
-    <meta property="og:image" content="https://addr010.github.io/pixel-pig-releases/pixel-pig-work.webp">
-    <meta property="og:url" content="https://addr010.github.io/pixel-pig-releases/">
+    <title>Pixel Pig | Free AI Media Creator Workbench</title>
+    <meta name="description" content="Pixel Pig is a free desktop workbench for AI media creators. Run supported model workflows through providers with better batching, prompts, files and outputs.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.pixelpig.net/">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta property="og:title" content="Pixel Pig | Free AI Media Creator Workbench">
+    <meta property="og:description" content="A free desktop workbench for running supported AI media workflows through providers with better batching, prompts, files and outputs.">
+    <meta property="og:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
+    <meta property="og:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
+    <meta property="og:url" content="https://www.pixelpig.net/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pixel Pig">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Pixel Pig | Desktop AI Workflow Studio">
-    <meta name="twitter:description" content="Batch runs, reusable workflows, local media management, and direct access to leading AI providers.">
-    <meta name="twitter:image" content="https://addr010.github.io/pixel-pig-releases/pixel-pig-work.webp">
+    <meta name="twitter:title" content="Pixel Pig | Free AI Media Creator Workbench">
+    <meta name="twitter:description" content="A free desktop workbench for running supported AI media workflows through providers with better batching, prompts, files and outputs.">
+    <meta name="twitter:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
+    <meta name="twitter:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Pixel Pig",
+        "url": "https://www.pixelpig.net/",
+        "downloadUrl": "https://github.com/addr010/pixel-pig-releases/releases",
+        "logo": "https://www.pixelpig.net/pixel-pig-512.png",
+        "image": "https://www.pixelpig.net/pixel-pig-work.webp",
+        "screenshot": "https://www.pixelpig.net/pixel-pig-work.webp",
+        "description": "Pixel Pig is a free desktop workbench for AI media creators. Run supported model workflows through providers with better batching, prompts, files and outputs.",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "AI media workflow tool",
+        "operatingSystem": "Windows 10/11, macOS 11 or later",
+        "isAccessibleForFree": true,
+        "keywords": "AI media creator workbench, AI creator tools, Kling, Vidu, Runway, Midjourney, Magnific, Higgsfield, ComfyUI, Topaz, ElevenLabs, prompt management, batch generation, local file organisation, Fal, Replicate, Kie.ai",
+        "featureList": [
+            "Run image, video, audio, speech, and 3D workflows like the ones creators use across Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI",
+            "Connect supported Fal, Replicate, Kie.ai, and ComfyUI providers",
+            "Batch prompts, variants, aspect ratios, inputs, and model settings",
+            "Handle uploads, downloads, generated files, comparisons, and local media tools from one desktop app"
+        ],
+        "sameAs": [
+            "https://github.com/addr010/pixel-pig-releases"
+        ],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "Contingent Media"
+        }
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -122,6 +165,13 @@
             font-family: "IBM Plex Mono", monospace;
             font-size: 0.95rem;
             color: var(--accent-soft);
+            overflow: hidden;
+        }
+
+        .brand-mark img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
         }
 
         .brand-copy strong {
@@ -828,10 +878,12 @@
     <div class="shell">
         <header class="topbar fade-up">
             <a class="brand" href="#top">
-                <div class="brand-mark">PP</div>
+                <div class="brand-mark">
+                    <img src="pixel-pig.png" alt="" width="38" height="38">
+                </div>
                 <div class="brand-copy">
                     <strong>Pixel Pig</strong>
-                    <span>Desktop AI workflow studio</span>
+                    <span>AI media creator workbench</span>
                 </div>
             </a>
             <nav class="nav" aria-label="Primary">
@@ -845,10 +897,10 @@
         <main id="top">
             <section class="hero">
                 <div class="hero-copy fade-up delay-1">
-                    <div class="eyebrow">Built for people doing real workflow work</div>
-                    <h1>One studio, not fifteen tabs.</h1>
+                    <div class="eyebrow">For creators who want more control than web apps give them</div>
+                    <h1>More control over the models you care about.</h1>
                     <p class="lede">
-                        Pixel Pig is a desktop app for running AI image, video, audio, speech, and 3D workflows from one place. Bring your own keys, batch across providers, and keep the files, prompts, and outputs where you can actually work with them.
+                        Pixel Pig is a free desktop workbench for AI media creators who love tools like Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI, but want more control over prompts, batches, files, downloads, outputs, and comparisons. It connects to supported providers like Fal, Replicate, Kie.ai, and ComfyUI so you can run repeatable workflows from one desktop app.
                     </p>
                     <div class="hero-actions">
                         <a class="button" href="#download">Download latest release</a>
@@ -856,12 +908,12 @@
                     </div>
                     <div class="hero-notes" aria-label="Product highlights">
                         <div class="hero-note">
-                            <strong>Desktop first</strong>
-                            <span>No browser circus. Local files stay close to the workflows.</span>
+                            <strong>Familiar model types</strong>
+                            <span>Image, video, audio, speech, and 3D workflows like the ones creators already use.</span>
                         </div>
                         <div class="hero-note">
-                            <strong>Provider agnostic</strong>
-                            <span>Fal, Replicate, Kie.ai, ComfyUI, and more in one surface.</span>
+                            <strong>Provider-powered</strong>
+                            <span>Use supported Fal, Replicate, Kie.ai, and ComfyUI connections to run jobs directly.</span>
                         </div>
                         <div class="hero-note">
                             <strong>Donation-ware</strong>
@@ -901,26 +953,26 @@
             <section class="manifest" id="why">
                 <div class="panel panel-main fade-up delay-2">
                     <span class="pill">Why it exists</span>
-                    <h2>A workbench for messy AI production.</h2>
+                    <h2>Creator tools are familiar. Provider workflows give you control.</h2>
                     <p class="section-copy">
-                        Most AI tools are either single-purpose demos or web dashboards that make serious iteration feel flimsy. Pixel Pig takes the opposite angle: one desktop surface for switching models, re-running variants, keeping outputs organised, and staying in flow.
+                        Many AI creator tools are built around model workflows that are also available through providers. Pixel Pig gives you a desktop place to run supported workflows directly, reuse prompts, batch variations, collect outputs, and keep generated files organised locally.
                     </p>
                     <div class="signal-grid">
                         <article class="signal">
-                            <h3>Batch without babysitting</h3>
-                            <p>Run multiple models, prompts, and aspect ratios in one go instead of repeating the same clicks across tabs.</p>
+                            <h3>Use familiar model types</h3>
+                            <p>Run image, video, audio, speech, and 3D workflows like the ones creators already use across Kling, Vidu, Runway, Midjourney, Higgsfield, Magnific, Topaz, ElevenLabs, and ComfyUI.</p>
                         </article>
                         <article class="signal">
-                            <h3>Bring your own stack</h3>
-                            <p>Use leading hosted providers or connect local ComfyUI when you want more control.</p>
+                            <h3>Connect through providers</h3>
+                            <p>Use supported Fal, Replicate, Kie.ai, and ComfyUI connections so Pixel Pig can run jobs directly instead of sending you through a dozen web apps.</p>
                         </article>
                         <article class="signal">
-                            <h3>Keep outputs nearby</h3>
-                            <p>Review, compare, crop, convert, extract frames, and manage files without jumping into five separate utilities.</p>
+                            <h3>More control per run</h3>
+                            <p>Batch prompts, variants, aspect ratios, inputs, and model settings without rebuilding the same job over and over.</p>
                         </article>
                         <article class="signal">
-                            <h3>Extend what ships</h3>
-                            <p>Community model mappings and workflow updates mean the catalog does not have to stay frozen.</p>
+                            <h3>Keep the work organised</h3>
+                            <p>Handle uploads, downloads, generated files, comparisons, and local media tools from one desktop app.</p>
                         </article>
                     </div>
                 </div>
@@ -937,7 +989,7 @@
                         <article class="timeline-item">
                             <div>
                                 <h3>Video iteration</h3>
-                                <p>Move from stills to image-to-video workflows without rebuilding your setup for each provider.</p>
+                                <p>Move from stills to image-to-video ideas without losing the prompt, source image, and final output trail.</p>
                             </div>
                         </article>
                         <article class="timeline-item">
@@ -956,7 +1008,7 @@
                         <span class="pill">Watch Pixel Pig</span>
                         <h2>See the app in motion.</h2>
                     </div>
-                    <p>Real walkthroughs say more than feature slogans. These demos show the actual product, not a concept render pretending to be one.</p>
+                    <p>Short videos showing the app, the interface, and common creator workflows.</p>
                 </div>
                 <div class="video-grid">
                     <article class="video-card fade-up delay-1">
@@ -1013,7 +1065,11 @@
                         <a class="button-secondary" href="https://github.com/addr010/pixel-pig-releases/releases">Open all releases</a>
                     </div>
                     <div class="release-list" id="releases" aria-live="polite">
-                        <div class="release-fallback">Loading release data from GitHub…</div>
+                        <div class="release-fallback">
+                            Download Pixel Pig from
+                            <a href="https://github.com/addr010/pixel-pig-releases/releases">GitHub Releases</a>.
+                            Latest release cards load here automatically when available.
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1022,7 +1078,7 @@
                 <div class="section-head fade-up">
                     <div>
                         <span class="pill">Notes before you install</span>
-                        <h2>Useful friction, clearly stated.</h2>
+                        <h2>Before you download.</h2>
                     </div>
                 </div>
                 <div class="support-grid">
@@ -1031,7 +1087,6 @@
                         <ul>
                             <li>Windows 10/11, 64-bit.</li>
                             <li>macOS 11 or later, Apple Silicon.</li>
-                            <li>Best experience is on reasonably modern hardware.</li>
                         </ul>
                     </article>
                     <article class="support-card fade-up delay-2">
@@ -1039,14 +1094,12 @@
                         <ul>
                             <li>Windows may require “More info” then “Run anyway”.</li>
                             <li>On macOS, use right-click then “Open” the first time.</li>
-                            <li>Pre-release builds are where newer work lands first.</li>
                         </ul>
                     </article>
                     <article class="support-card fade-up delay-3">
-                        <h3>Optional but useful</h3>
+                        <h3>Provider setup</h3>
                         <ul>
-                            <li>Install FFmpeg if you want audio and video combine features.</li>
-                            <li>Use your own API keys for provider access.</li>
+                            <li>Set up a supported Fal, Replicate, Kie.ai, or ComfyUI connection before running model workflows.</li>
                             <li>Open an issue if a needed model is missing.</li>
                         </ul>
                     </article>

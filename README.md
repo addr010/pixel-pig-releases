@@ -26,7 +26,7 @@ Models that rank highly on public leaderboards are included out of the box, and 
 ## 🔍 Beta Release – Try It Now  
 This repository hosts the **beta builds** of Pixel Pig.  
 
-**[⬇️ Download Pixel Pig](https://addr010.github.io/pixel-pig-releases/)**
+**[⬇️ Download Pixel Pig](https://www.pixelpig.net/)**
 
 Pixel Pig is **donation-ware** — free to use.  
 If you or your team are making money with it, consider *sharing the love*.  
@@ -35,7 +35,7 @@ Donation links are available inside the app.
 ---
 
 ## 🛠 Getting Started  
-1. **[Download the latest release](https://addr010.github.io/pixel-pig-releases/)** for your platform.  
+1. **[Download the latest release](https://www.pixelpig.net/)** for your platform.  
 2. Run the executable (Windows installer) or app bundle (macOS).  
 3. Your OS will show a security warning — on Windows click "More info" then "Run anyway", on macOS click "Open" to confirm.  
 4. Use it in your workflow and see how it fits.  
@@ -85,16 +85,11 @@ Example prompts:
 
 The Pixel Pig skills need the Pixel Pig MCP server. The easy path is to open Pixel Pig and connect to `http://127.0.0.1:7361/mcp`; `stdio` clients can launch `PixelPig.McpServer --stdio` without keeping the app open. See [MCP-SETUP.md](MCP-SETUP.md).
 
-### 🔧 FFmpeg Requirement
+### 🔧 FFmpeg
 
-Pixel Pig’s audio and video combine features require **FFmpeg** to be installed on your system. These tools will not appear unless FFmpeg is available in your PATH.
+Pixel Pig now bundles FFmpeg for audio and video combine features. You should not need to install FFmpeg separately.
 
-To install FFmpeg:
-
-- **macOS**: `brew install ffmpeg`
-- **Windows**: `choco install ffmpeg` or download directly from https://ffmpeg.org/download.html
-
-Once installed, restart Pixel Pig — it will automatically detect FFmpeg and enable the relevant tools.
+If the media combine tools do not appear in the app, please restart Pixel Pig and open an issue with your operating system and app version.
 
 ---
 
