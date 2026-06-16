@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Pig | Free AI Media Creator Workbench</title>
-    <meta name="description" content="Pixel Pig is a free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Keep prompts, batches, files, downloads, and outputs organised across the AI tools you already use.">
+    <meta name="description" content="Pixel Pig is a free desktop app for AI media creators. Generate and organise prompts, files, and outputs across Fal, Replicate, Kie.ai, and ComfyUI.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.pixelpig.net/">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta property="og:title" content="Pixel Pig | Free AI Media Creator Workbench">
-    <meta property="og:description" content="One studio, not fifteen tabs. A free desktop workbench for AI media creators — keep prompts, batches, files, and outputs organised across the AI tools you use.">
+    <meta property="og:description" content="A free desktop app for AI media creators. Generate and organise prompts, files, and outputs across your own provider accounts.">
     <meta property="og:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
     <meta property="og:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
     <meta property="og:url" content="https://www.pixelpig.net/">
@@ -18,7 +18,7 @@
     <meta property="og:site_name" content="Pixel Pig">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Pixel Pig | Free AI Media Creator Workbench">
-    <meta name="twitter:description" content="One studio, not fifteen tabs. A free desktop workbench for AI media creators — keep prompts, batches, files, and outputs organised across the AI tools you use.">
+    <meta name="twitter:description" content="A free desktop app for AI media creators. Generate and organise prompts, files, and outputs across your own provider accounts.">
     <meta name="twitter:image" content="https://www.pixelpig.net/pixel-pig-work.webp">
     <meta name="twitter:image:alt" content="Pixel Pig desktop interface showing AI workflow, media, and model controls.">
     <script type="application/ld+json">
@@ -27,11 +27,11 @@
         "@type": "SoftwareApplication",
         "name": "Pixel Pig",
         "url": "https://www.pixelpig.net/",
-        "downloadUrl": "https://github.com/addr010/pixel-pig-releases/releases",
+        "downloadUrl": "https://www.pixelpig.net/#download",
         "logo": "https://www.pixelpig.net/pixel-pig-512.png",
         "image": "https://www.pixelpig.net/pixel-pig-work.webp",
         "screenshot": "https://www.pixelpig.net/pixel-pig-work.webp",
-        "description": "Pixel Pig is a free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Keep prompts, batches, files, downloads, and outputs organised across the AI tools you already use.",
+        "description": "Pixel Pig is a free desktop app for AI media creators. Generate and organise prompts, files, and outputs across Fal, Replicate, Kie.ai, and ComfyUI.",
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "AI media workflow tool",
         "operatingSystem": "Windows 10/11, macOS 11 or later",
@@ -492,7 +492,7 @@
         }
 
         .panel-main {
-            grid-column: span 7;
+            grid-column: 1 / -1;
         }
 
         .panel-side {
@@ -506,7 +506,7 @@
         }
 
         .panel-main h2 {
-            max-width: 20ch;
+            max-width: 28ch;
         }
 
         .section-copy {
@@ -646,10 +646,6 @@
         }
 
         .release-intro {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 18px;
-            align-items: center;
             padding: 24px 24px 18px;
             border-bottom: 1px solid var(--line);
         }
@@ -686,8 +682,6 @@
         }
 
         .release-top {
-            grid-template-columns: minmax(0, 1fr) auto;
-            align-items: start;
             margin-bottom: 14px;
         }
 
@@ -938,13 +932,13 @@
             <section class="hero">
                 <div class="hero-copy fade-up delay-1">
                     <div class="eyebrow">For AI projects that have outgrown one web app</div>
-                    <h1>One studio, not fifteen tabs.</h1>
+                    <h1>Creator Built.</h1>
                     <div class="hero-lead">
-                        <span>Stop jumping between websites to generate your assets.</span>
+                        <span>Stop jumping around to generate or edit your assets.</span>
                         <span>Stop wasting money on subscriptions and credits.</span>
                     </div>
                     <p class="lede">
-                        A free desktop workbench for AI media creators whose projects have outgrown one-model web apps. Generate images, video, lip sync, upscaling, and sound in one place — every model running on your own provider keys (Fal, Replicate, Kie.ai, ComfyUI).
+                        I built Pixel Pig to solve the problems I faced making more and more complicated AI media projects. Generate images, video, lip sync, upscaling, and sound in one place — every model running on your own provider keys (Fal, Replicate, Kie.ai, ComfyUI).
                     </p>
                     <div class="hero-actions">
                         <a class="button" href="#download">Download latest release</a>
@@ -953,7 +947,7 @@
 
                 <aside class="hero-visual fade-up delay-2" aria-label="App preview">
                     <div class="kicker">
-                        <span class="pill">Live desktop screenshot</span>
+                        <span class="pill">Desktop App</span>
                         <span>Windows + macOS</span>
                     </div>
                     <div class="screen-frame">
@@ -981,16 +975,16 @@
 
             <div class="hero-notes fade-up delay-2" aria-label="Product highlights">
                 <div class="hero-note">
-                    <strong>One studio</strong>
-                    <span>Pick the model that fits the shot, not whatever one subscription forces.</span>
+                    <strong>Donation-ware</strong>
+                    <span>Free to use. If it earns you money, kick something back.</span>
+                </div>
+                <div class="hero-note">
+                    <strong>Create and Edit in One Place</strong>
+                    <span>Stop switching context and stay in your creative flow.</span>
                 </div>
                 <div class="hero-note">
                     <strong>Your own keys</strong>
                     <span>Runs on your Fal, Replicate, Kie.ai, and ComfyUI accounts — no markup.</span>
-                </div>
-                <div class="hero-note">
-                    <strong>Donation-ware</strong>
-                    <span>Free to use. If it earns you money, kick something back.</span>
                 </div>
             </div>
 
@@ -1021,35 +1015,6 @@
                     </div>
                 </div>
 
-                <div class="panel panel-side fade-up delay-3">
-                    <span class="pill">How people use it</span>
-                    <div class="timeline">
-                        <article class="timeline-item">
-                            <div>
-                                <h3>Concept passes</h3>
-                                <p>Test one prompt across multiple image models, compare, and keep only the contenders.</p>
-                            </div>
-                        </article>
-                        <article class="timeline-item">
-                            <div>
-                                <h3>Video iteration</h3>
-                                <p>Move from stills to image-to-video without losing the prompt and source trail.</p>
-                            </div>
-                        </article>
-                        <article class="timeline-item">
-                            <div>
-                                <h3>Asset wrangling</h3>
-                                <p>Sort outputs, prep files, and convert formats so the boring parts stay out of the way.</p>
-                            </div>
-                        </article>
-                        <article class="timeline-item">
-                            <div>
-                                <h3>Final polish</h3>
-                                <p>Combine clips and add audio with FFmpeg bundled in — no separate editor required.</p>
-                            </div>
-                        </article>
-                    </div>
-                </div>
             </section>
 
             <section class="video-section" id="watch">
@@ -1087,16 +1052,15 @@
                 <div class="release-shell fade-up">
                     <div class="release-intro">
                         <div>
-                            <span class="pill">Latest releases</span>
+                            <span class="pill">Current release</span>
                             <h2>Download the current build.</h2>
                         </div>
-                        <a class="button-secondary" href="https://github.com/addr010/pixel-pig-releases/releases">Open all releases</a>
                     </div>
                     <div class="release-list" id="releases" aria-live="polite">
                         <div class="release-fallback">
                             Download Pixel Pig from
                             <a href="https://github.com/addr010/pixel-pig-releases/releases">GitHub Releases</a>.
-                            Latest release cards load here automatically when available.
+                            The current release loads here automatically when available.
                         </div>
                     </div>
                 </div>
@@ -1162,15 +1126,22 @@
 
         function getReleaseSummary(body) {
             if (!body) {
-                return "Release notes are available on GitHub.";
+                return "";
             }
 
             const line = body
                 .split("\n")
                 .map((item) => item.trim())
-                .find((item) => item && !item.startsWith("#") && !item.startsWith("-") && !item.startsWith("*"));
+                .find((item) => {
+                    const normalized = item.toLowerCase();
+                    return item
+                        && !item.startsWith("#")
+                        && !item.startsWith("-")
+                        && !item.startsWith("*")
+                        && !normalized.startsWith("auto build from ");
+                });
 
-            return escapeHtml(line || "Release notes are available on GitHub.");
+            return line ? escapeHtml(line) : "";
         }
 
         function findAsset(assets, platform) {
@@ -1202,7 +1173,8 @@
             const windowsAsset = findAsset(release.assets, "windows");
             const macAsset = findAsset(release.assets, "mac");
             const badge = release.prerelease ? '<span class="badge">Pre-release</span>' : '<span class="badge">Stable</span>';
-            const featuredText = featured ? "Current pick" : "Recent build";
+            const featuredText = featured ? "Current build" : "Recent build";
+            const summary = getReleaseSummary(release.body);
 
             return `
                 <article class="release-card">
@@ -1214,9 +1186,8 @@
                                 ${badge}
                             </div>
                         </div>
-                        <a class="button-secondary" href="${release.html_url}">Release notes</a>
                     </div>
-                    <p class="release-body">${getReleaseSummary(release.body)}</p>
+                    ${summary ? `<p class="release-body">${summary}</p>` : ""}
                     <div class="release-assets">
                         ${renderAssetButton(windowsAsset, "Download for Windows", "Windows")}
                         ${renderAssetButton(macAsset, "Download for macOS", "macOS")}
@@ -1237,7 +1208,7 @@
                 const releases = await response.json();
                 const visibleReleases = releases
                     .filter((release) => !release.draft)
-                    .slice(0, 3);
+                    .slice(0, 1);
 
                 if (!visibleReleases.length) {
                     container.innerHTML = '<div class="release-fallback">No public releases are available yet. Check the GitHub Releases page for updates.</div>';
