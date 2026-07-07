@@ -4,12 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-This is the **public releases and distribution** repo for Pixel Pig — a closed-source desktop app for AI media workflows (the app source lives elsewhere). There is **no build system, package manager, or test suite** here. The repo holds four kinds of artifacts that ship to users:
+This is the **public releases and distribution** repo for Pixel Pig — a closed-source desktop app for AI media workflows (the app source lives elsewhere). There is **no build system, package manager, or test suite** here. The repo holds three kinds of artifacts that ship to users:
 
-1. **The marketing website** — `index.html` plus image/icon assets, `sitemap.xml`, `robots.txt`. Deployed to https://www.pixelpig.net/. `index.html` is a single self-contained file (~1200 lines, inline CSS/JS); edit it directly.
-2. **User docs** — `README.md` (GitHub landing page) and `MCP-SETUP.md` (the canonical MCP connection guide).
-3. **Community model mappings** — `models/**/*.json` (see below).
-4. **Agent skills** — `skills/*/SKILL.md`, installed by users via `npx skills add addr010/pixel-pig-releases --skill <name>`.
+1. **User docs** — `README.md` (GitHub landing page) and `MCP-SETUP.md` (the canonical MCP connection guide).
+2. **Community model mappings** — `models/**/*.json` (see below).
+3. **Agent skills** — `skills/*/SKILL.md`, installed by users via `npx skills add addr010/pixel-pig-releases --skill <name>`.
+
+> **The marketing website no longer lives here.** `pixelpig.net` is built from `website/` + `functions/` in the **private** `addr010/pixel-pig` repo and deployed to the `pixel-pig-releases` Cloudflare Pages project by `wrangler` on push to `main` (see `.github/workflows/deploy-website.yml` there). This repo must stay **public** because downloads resolve through `api.github.com` and the `/download/{win,mac}` Pages Function, both of which read GitHub Releases assets here unauthenticated.
 
 Because there's nothing to compile or test, "verifying" a change means re-reading the affected file (validate JSON, check links, view the HTML). Keep edits minimal and faithful to existing style.
 
