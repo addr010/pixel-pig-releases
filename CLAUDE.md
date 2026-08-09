@@ -8,7 +8,7 @@ This is the **public releases and distribution** repo for Pixel Pig — a closed
 
 1. **User docs** — `README.md` (GitHub landing page) and `MCP-SETUP.md` (the canonical MCP connection guide).
 2. **Community model mappings** — `models/**/*.json` (see below).
-3. **Agent skills** — `skills/*/SKILL.md`, installed by users via `npx skills add addr010/pixel-pig-releases --skill <name>`.
+3. **Agent skills** — self-contained packages under `skills/*/`, installed by users via `npx skills add addr010/pixel-pig-releases --skill <name>`.
 
 > **The marketing website no longer lives here.** `pixelpig.net` is built from `website/` + `functions/` in the **private** `addr010/pixel-pig` repo and deployed to the `pixel-pig-releases` Cloudflare Pages project by `wrangler` on push to `main` (see `.github/workflows/deploy-website.yml` there). This repo must stay **public** because downloads resolve through `api.github.com` and the `/download/{win,mac}` Pages Function, both of which read GitHub Releases assets here unauthenticated.
 
@@ -35,10 +35,10 @@ Some models are intentionally **not** here — they're built into the app instea
 
 ## Skills (`skills/`)
 
-Two agent skills, each a single `SKILL.md` with YAML frontmatter (`name`, `description`):
+Two agent skill packages, each with a required `SKILL.md` plus optional `agents/` metadata and `references/` loaded on demand:
 
-- `pixelpig-cinema-director` — the primary skill; drives the Pixel Pig MCP server to generate cinematic assets, character references, video shots, and rough movies. Enforces a strict project-first rule: every `pixelpig_run_workflow` call must pass an explicit `projectRoot` resolved via `pixelpig_list_projects`/`pixelpig_create_project`.
-- `hyperframes-pixelpig` — bridges a Pixel Pig movie into a HyperFrames render and attaches the result back. Depends on separately-installed HyperFrames skills.
+- `pixelpig-cinema-director` — the primary skill; drives Pixel Pig MCP for generation, dialogue/audio, movie editing, native rendering, retakes, and recovery. Its domain references keep the entrypoint concise. It enforces an explicit `projectRoot`, paid-run approval, and movie-state safety.
+- `hyperframes-pixelpig` — bridges a Pixel Pig movie into the current HyperFrames workflow, keeps source media linked, requires check/preview approval before render, and attaches the verified artifact back. It routes HyperFrames-specific work through the mandatory `hyperframes` entrypoint and current domain skills.
 
 Both skills depend on the Pixel Pig MCP server. When editing skills, keep them consistent with `MCP-SETUP.md` — it is the single source of truth for the connection details below.
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "PixelPig Cinema Director"
+  short_description: "Direct Pixel Pig productions end to end"
+  default_prompt: "Use $pixelpig-cinema-director to produce and assemble a verified Pixel Pig movie from my brief."

@@ -60,8 +60,8 @@ Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
 Pixel Pig includes optional agent skills for people using Codex, Claude Code, OpenCode, Cursor, or other tools that support `SKILL.md`.
 
-- `/pixelpig-cinema-director` is the one to start with. It helps an agent make character references, scene plates, video shots, generated assets, and rough movies through Pixel Pig.
-- `/hyperframes-pixelpig` is for HyperFrames. It helps an agent start from a Pixel Pig movie/project, render a HyperFrames composition, and attach the result back to Pixel Pig.
+- `/pixelpig-cinema-director` is the one to start with. It guides project-safe image, video, dialogue, audio, rough-cut, retake, recovery, and native-render work through Pixel Pig MCP.
+- `/hyperframes-pixelpig` is optional. It prepares a Pixel Pig movie/project for the current HyperFrames workflow, preserves linked project media, verifies the finished render, and attaches it back to Pixel Pig.
 
 Install the director skill from the project folder where you use your AI agent:
 
@@ -75,13 +75,13 @@ Add the HyperFrames bridge only if you use HyperFrames:
 npx skills add addr010/pixel-pig-releases --skill hyperframes-pixelpig
 ```
 
-HyperFrames has its own skills for composition, animation, media prep, validation, preview, and render. Install those from the HyperFrames project too.
+HyperFrames has its own skills for composition, animation, media preparation, validation, preview, and rendering. Its mandatory `hyperframes` entrypoint installs or refreshes the skills required for a particular composition.
 
 Example prompts:
 
-> Using `/pixelpig-cinema-director`, create a cinematic rough movie in my Pixel Pig project using GPT Image 2 stills and Seedance 2.0 video shots.
+> Using `/pixelpig-cinema-director`, inspect my Pixel Pig project and help me create a cinematic rough movie. Show me the available workflows and get approval before paid generations.
 
-> Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig project and attach the finished render back to the movie.
+> Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig movie, preview it for approval, then attach the verified finished render back to the movie.
 
 The Pixel Pig skills need the Pixel Pig MCP server. The easy path is to open Pixel Pig and connect to `http://127.0.0.1:7361/mcp`; `stdio` clients can launch `PixelPig.McpServer --stdio` without keeping the app open. See [MCP-SETUP.md](MCP-SETUP.md).
 

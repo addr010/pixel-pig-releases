@@ -1,96 +1,76 @@
 ---
-name: "hyperframes-pixelpig"
-description: "Use for HyperFrames renders from Pixel Pig movies that attach back through Pixel Pig MCP."
+name: hyperframes-pixelpig
+description: "Bridge Pixel Pig projects and movies into verified HyperFrames compositions and attach finished renders through Pixel Pig MCP. Use when a user wants to create, continue, render, deliver, or attach a HyperFrames composition using a Pixel Pig movie, rough cut, project media, collection, or newly generated asset."
 ---
 
 # HyperFrames Pixel Pig
 
-Pixel Pig is the project and movie spine for this workflow. HyperFrames is the
-composition and render engine.
+Use Pixel Pig as the project and movie spine. Use HyperFrames as the composition and render engine.
 
-Use Pixel Pig MCP for project lookup, movie metadata, generated media placement,
-HyperFrames workspace creation, and final render attachment. Use the normal
-HyperFrames skills for HTML composition, animation, validation, preview, and
-rendering.
+This skill prepares Pixel Pig context and preserves the final attachment path. It does not replace the normal HyperFrames entrypoint or its authoring, media, validation, preview, and render skills.
 
-## Related Skills
+## Connect And Verify
 
-- `hyperframes`: author `index.html`, timing, overlays, captions, transitions,
-  and animation
-- `hyperframes-cli`: run init, lint, inspect, validate, preview, and render
-- `hyperframes-media`: preprocess local audio, captions, TTS, and cutouts
-- `pixelpig-cinema-director`: generate cinematic assets or rough movies before
-  the HyperFrames finish
+Use the setup guide at <https://github.com/addr010/pixel-pig-releases/blob/main/MCP-SETUP.md> when Pixel Pig tools are unavailable. Configure the client directly when permitted.
 
-## When To Use
+- Connect to `http://127.0.0.1:7361/mcp` while Pixel Pig is open.
+- For stdio on macOS, launch `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio`.
+- For stdio on Windows, launch the bundled `PixelPig.McpServer.exe --stdio`.
+- Verify with `pixelpig_get_mcp_status` or `pixelpig_list_projects`, not a raw HTTP probe.
 
-Use this skill when the user asks to:
+## Load The Owning Skills
 
-- Create a HyperFrames render from a Pixel Pig movie
-- Turn a Pixel Pig rough cut into a finished HyperFrames composition
-- Use Pixel Pig project media as HyperFrames source media
-- Generate missing media in Pixel Pig, then compose it in HyperFrames
-- Attach the final HyperFrames render back to Pixel Pig
+Use the mandatory `hyperframes` entrypoint for routing and project lifecycle. Load its domain skills only when the task needs them:
 
-Do not use this skill for general Pixel Pig generation unless the user also asks
-for a HyperFrames composition.
+- `hyperframes-core` for composition structure, timing, media ownership, and deterministic rendering.
+- `hyperframes-animation` for motion, transitions, and runtime adapters.
+- `hyperframes-creative` for design, typography, narration, and beat planning.
+- `media-use` for images, icons, audio, captions, grades, cutouts, and other media preparation.
+- `hyperframes-cli` for scaffold, lint, check, preview, render, upgrade, and diagnostics.
+- `pixelpig-cinema-director` when cinematic assets or a rough Pixel Pig movie must be created first.
 
-## Workflow
+Do not use the obsolete `hyperframes-media` name. Do not use deprecated `inspect` or `validate` commands in new work; `hyperframes check` is the final gate.
 
-### 1. Resolve Project And Movie
+## Resolve The Pixel Pig Context
 
-Use Pixel Pig MCP tools, not raw HTTP calls.
+Resolve a real project before creating or generating anything:
 
-Required tools:
+1. Call `pixelpig_list_projects`.
+2. Resolve the user's selected, named, current, or supplied absolute `projectRoot`.
+3. Call `pixelpig_create_project` only when the user asks for a new project.
+4. Call `pixelpig_list_project_movies` and `pixelpig_get_project_movie` when starting from a movie.
+5. Stop and ask if the required project or movie cannot be resolved.
 
-- `pixelpig_list_projects`
-- `pixelpig_list_project_movies`
-- `pixelpig_get_project_movie`
+Treat the returned movie as source of truth for clip paths, trims, playback rates, audio, duration, orientation, output resolution, and `updatedUtc`. Do not invent transcript, caption, stem, scene, or timing metadata.
 
-Resolve a real project and movie before writing files. If the user gives a
-`projectRoot`, confirm it exists before using it. If the user asks for a new
-movie, use `pixelpig_create_movie`.
+## Generate Only Missing Media
 
-Read the movie before authoring. Treat these fields as source of truth:
-
-- Clip paths
-- Trim ranges
-- Durations
-- Audio clips
-- Orientation
-- Output resolution
-
-Do not invent scene, transcript, caption, or stem metadata that is not present.
-
-### 2. Generate Missing Media
-
-Skip this step if the movie already contains the needed clips and audio.
-
-When generation is needed:
+Skip generation when the project already contains the required media. When generation is needed:
 
 1. Call `pixelpig_list_workflows`.
-2. Call `pixelpig_describe_workflow` for unfamiliar workflows or parameters.
-3. Call `pixelpig_run_workflow` with the resolved absolute `projectRoot`.
-4. Keep the returned `runId`.
-5. Poll `pixelpig_get_workflow_run` until completed.
-6. Use completed output paths from the run result.
+2. Call `pixelpig_describe_workflow` for the selected workflow and model.
+3. Pass the resolved absolute `projectRoot` and local inputs as `files[].path`.
+4. Call `pixelpig_run_workflow` once.
+5. Keep its `runId` and poll `pixelpig_get_workflow_run` until terminal state.
+6. Use only completed output `filePath` values.
 
-Never run Pixel Pig workflows without `projectRoot`. Generated assets must land
-inside the Pixel Pig project.
+Use `pixelpig-cinema-director` for paid-run approval, recovery, retakes, reference locking, dialogue approval, and rough-movie safety. Never run a Pixel Pig workflow without `projectRoot`.
 
-### 3. Prepare Workspace
+## Prepare The Workspace
 
-Create the HyperFrames run folder through Pixel Pig MCP:
+Call:
 
 ```text
 pixelpig_prepare_hyperframes_workspace
   projectRoot: /absolute/project/root
   movieId: <movie id>
-  prompt: <optional user brief>
-  includeRoughMovie: <optional boolean>
+  prompt: <concise creative brief>
+  includeRoughMovie: true
 ```
 
-Expected return values:
+Set `includeRoughMovie` only when the composition needs a reference cut. It is composition context, not a finished export.
+
+Record the returned:
 
 - `runId`
 - `runFolder`
@@ -99,111 +79,91 @@ Expected return values:
 - `movieContextPath`
 - `promptPath`
 - `roughMoviePath`
+- `messages`
 
-The run folder is under:
+Read `movie-context.json` before authoring. It includes the exact `projectStructure.mediaFolders`, movie settings, clip timing, trim ranges, audio automation, and source existence checks.
 
-```text
-<projectRoot>/.pixelpig/hyperframes/runs/<runId>/
-```
+## Link Media Without Copying
 
-### 4. Initialize HyperFrames
+Keep Pixel Pig media in its configured project folders. From `workFolder`, create relative symlinks to the exact folders returned in `movie-context.json`.
 
-Run this from `workFolder`:
-
-```bash
-npx hyperframes init . --yes
-```
-
-Then use the normal HyperFrames authoring and CLI skills before editing or
-running the composition.
-
-### 5. Link Media
-
-Symlink Pixel Pig project media into `workFolder`. Do not copy source media.
-
-Common layout:
-
-```text
-<projectRoot>/.pixelpig/hyperframes/runs/<runId>/work/
-```
-
-Common links from that folder:
+Typical links look like:
 
 ```bash
-ln -s ../../../../../footage footage
+ln -s ../../../../../footage videos
 ln -s ../../../../../audio audio
 ln -s ../../../../../images images
 ```
 
-Adjust the `..` count if the folder depth differs. Verify links with `ls`.
+Folder names are user-configurable, so derive every target from `projectStructure.mediaFolders`; do not assume the examples exist. Verify each link resolves before authoring.
 
-Use relative media paths in HyperFrames files:
+Use relative composition paths such as `videos/clip.mp4` and `audio/music.wav`. Never copy large media into `workFolder`, and never write absolute user paths into composition HTML.
 
-```html
-<video src="footage/clip.mp4"></video>
-<audio src="audio/music.wav"></audio>
-```
+## Author Through HyperFrames
 
-Never use absolute `/Users/...` media paths in the composition.
+Treat `workFolder` as the HyperFrames project root and invoke the `hyperframes` entrypoint. Let it route fresh work, resume existing state, and choose the correct scaffold or workflow. Do not reconstruct current HyperFrames setup commands from memory.
 
-### 6. Author And Validate
+During authoring:
 
-Read `movie-context.json` before editing `index.html`.
+- Match composition dimensions to the Pixel Pig movie output.
+- Map source media starts and trims from `movie-context.json`.
+- Preserve audio timing and gain unless the user requests a mix change.
+- Keep generated or processed user-facing media in the configured Pixel Pig media folders.
+- Keep HyperFrames run state and the canonical render under the returned run folder.
 
-Match:
+## Check, Preview, Approve, And Render
 
-- `data-width` and `data-height` to the movie output resolution
-- Media paths to symlinked project folders
-- Media start and trim values to the movie context
-- Audio timing and volume to the movie context unless the user asks to change it
+Use `hyperframes-cli` for exact command contracts.
 
-Run from `workFolder`:
+During iteration, run:
 
 ```bash
 npx hyperframes lint
-npx hyperframes inspect
-npx hyperframes validate
-npx hyperframes render --output renders/output.mp4
 ```
 
-Use `hyperframes-cli` for command details and troubleshooting.
+For the final gate, preview, and delivery render:
 
-### 7. Attach Render
+```bash
+npx hyperframes check
+npx hyperframes preview
+# Wait for the user's final preview approval.
+npx hyperframes render --quality high --output ../renders/output.mp4
+test -s ../renders/output.mp4
+ffprobe -v error -show_format ../renders/output.mp4
+```
 
-Attach the rendered output through Pixel Pig MCP:
+Do not render merely because checks pass. Wait for final preview approval. Verify file existence, dimensions, duration, video codec, and audio stream.
+
+Keep the canonical attached artifact in `rendersFolder`. Copy the verified final non-destructively into `projectStructure.mediaFolders.videos` with a clear delivery name when the user expects a normal project export. Never overwrite an existing delivery without explicit approval.
+
+## Attach The Verified Render
+
+Attach the canonical run render through Pixel Pig MCP:
 
 ```text
 pixelpig_attach_hyperframes_layer
   projectRoot: /absolute/project/root
   movieId: <movie id>
-  runId: <runId>
-  renderPath: <absolute path to rendered file>
+  runId: <runId from workspace preparation>
+  renderPath: <absolute canonical path under rendersFolder>
   name: <display name>
-  promptSummary: <short summary>
+  promptSummary: <short factual summary>
+  enabled: true
 ```
 
-This records a HyperFrames layer for the movie. It must not rewrite the movie
-source clips or audio clips.
+Confirm the returned layer ID, movie ID, run ID, enabled state, render path, and layers metadata path. Attaching a layer must not rewrite the movie's source clips or audio.
 
-## Rules
+For a revision, keep the same run folder, update the composition, repeat check/preview/approval/render, and attach the newly verified artifact. Do not overwrite a prior user-facing delivery unless requested.
 
-- Always resolve a Pixel Pig project and movie first.
-- Always pass `projectRoot` to Pixel Pig workflow runs.
-- Always use Pixel Pig MCP tools for Pixel Pig verification.
-- Never copy source media into the HyperFrames work folder.
-- Never use absolute media paths in HyperFrames composition files.
-- Always read `movie-context.json` before authoring.
-- Always run lint, inspect, and validate before render.
-- Always attach the final render with `pixelpig_attach_hyperframes_layer`.
+## Hard Rules
 
-## Output Checklist
-
-- [ ] Project resolved through Pixel Pig MCP
-- [ ] Movie resolved through Pixel Pig MCP
-- [ ] Movie context read before authoring
-- [ ] Any generated media used `projectRoot`
-- [ ] Workspace created with `pixelpig_prepare_hyperframes_workspace`
-- [ ] Project media symlinked into `workFolder`
-- [ ] Composition uses relative media paths
-- [ ] Lint, inspect, and validate completed
-- [ ] Render attached with `pixelpig_attach_hyperframes_layer`
+- Resolve the Pixel Pig project and movie before authoring.
+- Pass `projectRoot` to every generation call.
+- Use Pixel Pig MCP for Pixel Pig operations.
+- Read `movie-context.json` before writing the composition.
+- Symlink project media; never copy it into `workFolder`.
+- Use relative media paths in HyperFrames files.
+- Use current HyperFrames skills and `check`; avoid obsolete names and deprecated commands.
+- Wait for final preview approval before rendering.
+- Verify the canonical render before attachment.
+- Preserve a separate non-destructive user-facing delivery when requested.

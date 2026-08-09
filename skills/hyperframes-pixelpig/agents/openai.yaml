@@ -1,0 +1,4 @@
+interface:
+  display_name: "HyperFrames for Pixel Pig"
+  short_description: "Finish Pixel Pig movies in HyperFrames"
+  default_prompt: "Use $hyperframes-pixelpig to turn my Pixel Pig movie into a verified HyperFrames render and attach it back to the project."
