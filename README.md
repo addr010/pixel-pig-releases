@@ -46,7 +46,7 @@ Donation links are available inside the app.
 
 ### 🤖 MCP for Local AI Clients
 
-Pixel Pig releases now include a bundled MCP server for local AI tools such as Codex, Claude Desktop, and other MCP-compatible clients.
+Pixel Pig releases include a bundled MCP server for local AI tools such as Codex, Claude Code, and other MCP-compatible clients.
 
 - If Pixel Pig is already running, connect to `http://127.0.0.1:7361/mcp`
 - If your AI client prefers `stdio`, launch:
@@ -56,11 +56,13 @@ Pixel Pig releases now include a bundled MCP server for local AI tools such as C
 
 Detailed setup and troubleshooting: [MCP-SETUP.md](MCP-SETUP.md)
 
+Customer walkthroughs: [Codex](https://www.pixelpig.net/help/create-with-pixelpig-in-codex/) · [Claude Code](https://www.pixelpig.net/help/create-with-pixelpig-in-claude-code/)
+
 ### 🎬 Pixel Pig Agent Skills
 
 Pixel Pig includes optional agent skills for people using Codex, Claude Code, OpenCode, Cursor, or other tools that support `SKILL.md`.
 
-- `/pixelpig-cinema-director` is the one to start with. It guides project-safe image, video, dialogue, audio, rough-cut, retake, recovery, and native-render work through Pixel Pig MCP.
+- `/pixelpig-cinema-director` is the one to start with. It turns a plain-language idea into an approved visual plan, then guides image, video, dialogue, sound, rough-cut, retake, and delivery work through Pixel Pig MCP.
 - `/hyperframes-pixelpig` is optional. It prepares a Pixel Pig movie/project for the current HyperFrames workflow, preserves linked project media, verifies the finished render, and attaches it back to Pixel Pig.
 
 Install the director skill from the project folder where you use your AI agent:
@@ -79,7 +81,7 @@ HyperFrames has its own skills for composition, animation, media preparation, va
 
 Example prompts:
 
-> Using `/pixelpig-cinema-director`, inspect my Pixel Pig project and help me create a cinematic rough movie. Show me the available workflows and get approval before paid generations.
+> Use Pixel Pig Cinema Director to help me turn this idea into a short cinematic scene. Plan it with me before generating anything.
 
 > Using `/hyperframes-pixelpig`, begin a HyperFrames composition from my Pixel Pig movie, preview it for approval, then attach the verified finished render back to the movie.
 

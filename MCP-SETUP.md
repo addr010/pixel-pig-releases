@@ -30,6 +30,28 @@ Use one of these launch modes:
 
 HTTP mode listens on port `7361` by default. Override with `PIXELPIG_MCP_PORT` if needed.
 
+## Connect from Codex
+
+On macOS, run:
+
+```bash
+codex mcp add pixelpig -- /Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio
+```
+
+Or open **Settings → MCP servers → Add server**, choose `STDIO`, name it `pixelpig`, use `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer` as the command, and add `--stdio` as its argument. On Windows, choose the `PixelPig.McpServer.exe` beside your installed `PixelPig.exe` instead.
+
+Restart Codex, enter `/mcp`, and confirm `pixelpig` is connected. Then ask Codex to use PixelPig to check its MCP status.
+
+## Connect from Claude Code
+
+On macOS, run:
+
+```bash
+claude mcp add --transport stdio --scope user pixelpig -- /Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio
+```
+
+On Windows, replace the command path with the quoted path to `PixelPig.McpServer.exe` beside your installed `PixelPig.exe`. Restart Claude Code, enter `/mcp`, and confirm `pixelpig` is connected. This local setup is for Claude Code; a browser-based Claude connector cannot reach PixelPig on your computer.
+
 ## What AI clients should expect
 
 PixelPig MCP exposes:

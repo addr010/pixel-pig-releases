@@ -55,8 +55,6 @@ Use the setup guide at <https://github.com/addr010/pixel-pig-releases/blob/main/
 - For Claude Code, add PixelPig at user scope so it works across projects: `claude mcp add --transport stdio --scope user pixelpig -- <PixelPig.McpServer path> --stdio`. Use the macOS or Windows installed-app path above, check it with `/mcp`, then verify with `pixelpig_get_mcp_status`.
 - Verify with a real MCP call such as `pixelpig_get_mcp_status` or `pixelpig_list_projects`; raw HTTP health checks do not verify MCP exposure.
 
-Inspect the connected tool schemas before movie work. Pixel Pig v0.32.0 lacks `pixelpig_backup_project_movie`, live-editor routing, and revision fields such as `expectedUpdatedUtc`; use the legacy closed-app path in `references/movie-editing.md` on that version. Use the current live-editor path only when its tools and fields are actually exposed.
-
 Ask only when the installation cannot be found, a required client restart cannot be performed, or the environment blocks configuration.
 
 ## Resolve The Project
@@ -75,7 +73,7 @@ Use collections only when the user explicitly points to an asset pack. Use `pixe
 Before every workflow run:
 
 1. Call `pixelpig_list_workflows`; only connected providers appear.
-2. Call `pixelpig_describe_workflow` for the selected workflow. Include the model ID only when the connected tool schema exposes its optional `model` input.
+2. Call `pixelpig_describe_workflow` with the selected workflow and model ID.
 3. Treat the descriptor as authoritative for exposed inputs. Do not invent parameters or hidden overrides.
 4. Follow any parameter `contract` validation rules, format examples, mode requirements, and processing semantics.
 5. If an advanced UI input is missing from the selected model's descriptor, report that contract gap instead of guessing.
