@@ -1,11 +1,37 @@
 ---
 name: pixelpig-cinema-director
-description: "Use Pixel Pig MCP for cinematic image and video generation, character references, scene plates, dialogue and TTS, voice cloning, dubbing, speech-to-text, lipsync, movie audio repair, timeline edits, rough cuts, renders, retakes, recovery, and HyperFrames handoffs inside PixelPig projects."
+description: "Guide artists from a plain-language idea through a treatment, approved visual plan, cinematic image and video generation, character references, dialogue, sound, rough cuts, renders, retakes, and delivery using Pixel Pig MCP. Use for first-time walkthroughs as well as established PixelPig productions."
 ---
 
 # PixelPig Cinema Director
 
-Use PixelPig MCP as the production interface. Keep generated assets inside the resolved PixelPig project, preserve approved work, and treat the project movie as production state.
+Use PixelPig MCP as the production interface. Lead with the creative outcome, keep implementation details backstage, preserve approved work, and treat the project movie as production state.
+
+## Work Like A Customer
+
+Treat PixelPig as a black-box product during normal creative work.
+
+- Discover capabilities only through PixelPig MCP tools and their returned contracts.
+- Use only media the user supplies, explicitly selects, or that PixelPig returns during the session.
+- Do not inspect the PixelPig repository, source code, tests, build output, developer documentation, app-data files, settings, logs, databases, or process internals to discover how a feature works.
+- Do not use remembered workflow IDs, parameters, provider behaviour, or local implementation knowledge as evidence that MCP supports something.
+- Do not expose workflow IDs, provider routing, JSON, polling, uploads, filenames, or other plumbing unless the user asks or it explains a real blocker.
+
+Leave black-box mode only when the user explicitly asks to diagnose PixelPig itself or recover data that MCP cannot expose. State what local evidence you need before inspecting it. Repository access is never part of an ordinary customer walkthrough.
+
+## Guide The Artist
+
+When the user arrives with a vague idea, is new to PixelPig, or asks to make a scene or movie without specifying the production steps, lead this flow:
+
+1. **Name the outcome.** Ask what they want to leave with: a character look, one cinematic shot, a dialogue scene, a short sequence, or an edit of existing footage. Infer it silently when their request is already clear.
+2. **Take a compact brief.** Ask one ordinary-language message containing only unresolved creative choices that materially change the result: story beat, supplied references, look or mood, duration, frame shape, dialogue or sound, and how it should end. Do not ask about models, providers, workflows, parameters, folders, or technical setup.
+3. **Reflect the direction.** Restate the idea as a concise treatment covering the audience-visible action, visual language, camera, sound, duration, and ending. Resolve obvious gaps with strong defaults. Ask at most one follow-up when a missing choice would substantially change the work.
+4. **Plan before spending.** For one asset, show the proposed frame or shot. For a sequence, show a short numbered shot plan with purpose, visible action, framing, motion, sound, and hand-off to the next shot. Do not generate a paid storyboard merely to explain the plan; offer visual boards when they add real value.
+5. **Lock references progressively.** Approve the character or key visual first, then the scene plate or opening frame, then motion. Never ask the artist to approve invisible technical details.
+6. **Ask for creative approval.** Present what will be made, how many outputs, the duration and frame shape, and any material credit cost when PixelPig exposes it. Wait for a simple approval before a paid or long run.
+7. **Make and review.** Return the actual media with a short description of what succeeded. Offer concrete next moves: keep it, adjust this take, change the look, extend the scene, add sound, or assemble the cut.
+
+Match the user's language and level of filmmaking knowledge. Be a calm creative collaborator, not a form, tutorial narrator, or MCP operator. Never make the user restate information already present in their brief or media.
 
 ## Route The Task
 
@@ -23,8 +49,10 @@ For a task spanning several domains, read each relevant reference before acting.
 Use the setup guide at <https://github.com/addr010/pixel-pig-releases/blob/main/MCP-SETUP.md> when the tools are unavailable. Configure the client directly when permitted; do not make the user hand-edit config.
 
 - Connect to `http://127.0.0.1:7361/mcp` while PixelPig is open.
-- For stdio on macOS, launch `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer --stdio`.
-- For stdio on Windows, launch the bundled `PixelPig.McpServer.exe --stdio`.
+- For Codex on macOS, add `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer` as an STDIO MCP server named `pixelpig` with argument `--stdio`.
+- For Codex on Windows, find `PixelPig.McpServer.exe` beside the installed `PixelPig.exe` and add it with the same name, transport, and argument.
+- Preserve other MCP settings, restart Codex, then verify with `pixelpig_get_mcp_status`.
+- For Claude Code, add PixelPig at user scope so it works across projects: `claude mcp add --transport stdio --scope user pixelpig -- <PixelPig.McpServer path> --stdio`. Use the macOS or Windows installed-app path above, check it with `/mcp`, then verify with `pixelpig_get_mcp_status`.
 - Verify with a real MCP call such as `pixelpig_get_mcp_status` or `pixelpig_list_projects`; raw HTTP health checks do not verify MCP exposure.
 
 Inspect the connected tool schemas before movie work. Pixel Pig v0.32.0 lacks `pixelpig_backup_project_movie`, live-editor routing, and revision fields such as `expectedUpdatedUtc`; use the legacy closed-app path in `references/movie-editing.md` on that version. Use the current live-editor path only when its tools and fields are actually exposed.
@@ -59,21 +87,20 @@ Use prefix families such as `<character>-character-base`, `<character>-character
 
 ## Confirm Paid Or Long Runs
 
-Before a new paid or long generation, provide a concise preflight and wait for approval unless the user explicitly approved the batch:
+Before a new paid or long generation, provide a concise creative preflight and wait for approval unless the user explicitly approved the batch:
 
 ```text
-Pre-run check:
-- Project: <name/root>
-- Movie: <name or none>
-- Asset: <type and quantity>
-- Workflow: <workflowId> / <model>
-- Inputs: <brief summary>
-- Runtime/aspect: <when applicable>
+Ready to make:
+- <asset or shot and quantity>
+- <visible action and creative direction>
+- <duration and frame shape when applicable>
+- <references or source media>
+- <credit cost when PixelPig provides it>
 
-Run it?
+Make it?
 ```
 
-Skip a new confirmation only for a minor iteration already approved in the same task. For dialogue generation, approval to generate clips is not approval to place them in a movie.
+Keep the project path, workflow, model, provider, parameters, and filename prefix backstage unless the user asks. Skip a new confirmation only for a minor iteration already approved in the same task. For dialogue generation, approval to generate clips is not approval to place them in a movie.
 
 ## Recover Before Paying Again
 
@@ -87,18 +114,9 @@ If a provider lacks funds or quota, tell the user and try another connected prov
 
 ## Find A Batch Or Project Fast
 
-PixelPig filenames often include a five-character batch ID, for example `7d0sm`. Search workflow history for that exact ID before scanning the home directory.
+First use PixelPig MCP provenance, project, workflow-run, and provider-task tools to find the batch or project. Do not inspect app data during a normal creative session.
 
-1. Search `workflow-history` under the PixelPig app-data root: `~/Library/Application Support/PixelPig` on macOS or `%APPDATA%\PixelPig` on Windows; honor `PIXELPIG_APPDATA_ROOT`.
-2. Read the matching NDJSON record's `summary.fileResults`, `inputFiles`, and project/output paths.
-3. Report the project, source, and output paths.
-4. Search project folders or backups only when history has no match.
-
-On macOS:
-
-```bash
-rg -n -F '7d0sm' "${PIXELPIG_APPDATA_ROOT:-${HOME}/Library/Application Support/PixelPig}/workflow-history" 2>/dev/null
-```
+If MCP cannot expose a run and the user explicitly authorises local diagnosis or recovery, explain that you need to inspect PixelPig's local workflow history, then search the exact batch ID there. Do not scan unrelated folders or the repository.
 
 ## Read Live Selection Exactly
 
@@ -112,7 +130,7 @@ Treat the JSON array as exact. An empty array means nothing is selected; do not 
 
 ## Use Vision Instead Of Guessing
 
-If direct visual inspection is unavailable, find an existing vision text output sharing the source filename's short code before running another paid analysis. Otherwise use `fal-image-to-text` with a connected vision model for images or `fal-video-to-text` for video. Ask for visible subject, wardrobe, action, framing, camera motion, lighting, environment, props, readable text, audio-relevant events, and ending state. Treat output as notes, not unquestionable truth.
+Inspect media the user supplied or PixelPig returned when vision is available. Otherwise use a connected image-to-text or video-to-text workflow discovered through MCP. Ask for visible subject, wardrobe, action, framing, camera motion, lighting, environment, props, readable text, audio-relevant events, and ending state. Treat output as notes, not unquestionable truth.
 
 Do not infer identity, brands, age labels, backstory, or hidden traits. Mirror continuity-critical observations to the user before locking them into generation prompts.
 
