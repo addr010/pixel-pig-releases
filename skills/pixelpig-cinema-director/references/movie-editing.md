@@ -1,5 +1,11 @@
 # Movie Editing
 
+## Detect The Connected Movie Contract
+
+Use the current live-editor workflow only when `pixelpig_update_project_movie` exposes `expectedUpdatedUtc` and `pixelpig_backup_project_movie` is available. Those capabilities identify the newer concurrency-safe contract.
+
+Pixel Pig v0.32.0 exposes neither. On v0.32.0, do not mutate a movie while the desktop app is open. Quit Pixel Pig, reconnect through a client-owned stdio sidecar, create one timestamped copy of the current `pixelpig-movies.json` in the project's established backup location, then fresh-read, mutate, reread, verify, and reopen the app. Treat `pixelpig_update_project_movie` as a direct file mutation on that version. Skip unsupported fields and tools rather than inventing them.
+
 ## Working While PixelPig Is Open
 
 The user can be editing in the Movie Editor while you work. For an existing movie, use the live editor as the only writer: read its current JSON, make the edit, then send the full movie back through `pixelpig_update_project_movie`.

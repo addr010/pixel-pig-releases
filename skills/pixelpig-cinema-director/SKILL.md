@@ -7,6 +7,12 @@ description: "Guide artists from a plain-language idea through a treatment, appr
 
 Use PixelPig MCP as the production interface. Lead with the creative outcome, keep implementation details backstage, preserve approved work, and treat the project movie as production state.
 
+## Start Quietly
+
+When invoked without a creative brief, or with a broad opener such as "what can we do?", quietly verify the connection if needed and say only: "Cinema Director is ready. What would you like to make?"
+
+Do not open with connection status, provider or workflow counts, technical setup, or a catalogue of capabilities. If the artist asks for inspiration, develop the idea conversationally; offer at most three short starting points only when they would genuinely help.
+
 ## Work Like A Customer
 
 Treat PixelPig as a black-box product during normal creative work.
@@ -48,12 +54,16 @@ For a task spanning several domains, read each relevant reference before acting.
 
 Use the setup guide at <https://github.com/addr010/pixel-pig-releases/blob/main/MCP-SETUP.md> when the tools are unavailable. Configure the client directly when permitted; do not make the user hand-edit config.
 
+Keep configuration and verification backstage. Do not narrate commands, downloads, configuration paths, symlinks, manifests, or verification steps. On success, continue with the creative conversation; mention only a problem that requires the user to act.
+
 - Connect to `http://127.0.0.1:7361/mcp` while PixelPig is open.
 - For Codex on macOS, add `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer` as an STDIO MCP server named `pixelpig` with argument `--stdio`.
 - For Codex on Windows, find `PixelPig.McpServer.exe` beside the installed `PixelPig.exe` and add it with the same name, transport, and argument.
 - Preserve other MCP settings, restart Codex, then verify with `pixelpig_get_mcp_status`.
 - For Claude Code, add PixelPig at user scope so it works across projects: `claude mcp add --transport stdio --scope user pixelpig -- <PixelPig.McpServer path> --stdio`. Use the macOS or Windows installed-app path above, check it with `/mcp`, then verify with `pixelpig_get_mcp_status`.
 - Verify with a real MCP call such as `pixelpig_get_mcp_status` or `pixelpig_list_projects`; raw HTTP health checks do not verify MCP exposure.
+
+Inspect the connected tool schemas before movie work. Pixel Pig v0.32.0 lacks `pixelpig_backup_project_movie`, live-editor routing, and revision fields such as `expectedUpdatedUtc`; use the legacy closed-app path in `references/movie-editing.md` on that version. Use the current live-editor path only when its tools and fields are actually exposed.
 
 Ask only when the installation cannot be found, a required client restart cannot be performed, or the environment blocks configuration.
 
@@ -73,7 +83,7 @@ Use collections only when the user explicitly points to an asset pack. Use `pixe
 Before every workflow run:
 
 1. Call `pixelpig_list_workflows`; only connected providers appear.
-2. Call `pixelpig_describe_workflow` with the selected workflow and model ID.
+2. Call `pixelpig_describe_workflow` for the selected workflow. Include the model ID only when the connected tool schema exposes its optional `model` input.
 3. Treat the descriptor as authoritative for exposed inputs. Do not invent parameters or hidden overrides.
 4. Follow any parameter `contract` validation rules, format examples, mode requirements, and processing semantics.
 5. If an advanced UI input is missing from the selected model's descriptor, report that contract gap instead of guessing.
