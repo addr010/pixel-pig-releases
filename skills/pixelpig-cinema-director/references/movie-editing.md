@@ -1,11 +1,5 @@
 # Movie Editing
 
-## Detect The Connected Movie Contract
-
-Use the current live-editor workflow only when `pixelpig_update_project_movie` exposes `expectedUpdatedUtc` and `pixelpig_backup_project_movie` is available. Those capabilities identify the newer concurrency-safe contract.
-
-Pixel Pig v0.32.0 exposes neither. On v0.32.0, do not mutate a movie while the desktop app is open. Quit Pixel Pig, reconnect through a client-owned stdio sidecar, create one timestamped copy of the current `pixelpig-movies.json` in the project's established backup location, then fresh-read, mutate, reread, verify, and reopen the app. Treat `pixelpig_update_project_movie` as a direct file mutation on that version. Skip unsupported fields and tools rather than inventing them.
-
 ## Working While PixelPig Is Open
 
 The user can be editing in the Movie Editor while you work. For an existing movie, use the live editor as the only writer: read its current JSON, make the edit, then send the full movie back through `pixelpig_update_project_movie`.
@@ -26,41 +20,13 @@ There is no separate save or force call. A successful update means the live edit
 
 `pixelpig_list_project_movies` returns `updatedUtc` for every movie in one call. Snapshotting those at the start gives you a cheap way to see what the user has touched, rather than finding out at handoff.
 
-Either form needs PixelPig open on the target project's Movie Editor. It fails clearly otherwise, and the closed-app session below covers that case.
-
-## Editing The User's Project Directly
-
-This applies when PixelPig is closed, or when the work doesn't take the shape of a finished movie.
-
-`pixelpig_create_movie`, `pixelpig_add_movie_clip`, and `pixelpig_add_movie_audio_clip` write the movie file directly. An open editor holds its own copy of that document and can overwrite those writes without warning. With the app closed there is nothing to race. `pixelpig_update_project_movie` is different: it requires the target Movie Editor to be open and adds or updates through its live state, with optimistic concurrency on replacements.
-
-A sequence that holds up for the first movie write in such a session:
-
-1. Tell the user that PixelPig will close briefly and reopen after the verified edit so they are prepared.
-2. If PixelPig is running, request a clean application quit and verify the process has exited. Pause only when the user explicitly says unsaved work is at risk. If the app is already closed, skip shutdown.
-3. Reconnect through a client-owned stdio MCP sidecar after shutdown; closing the desktop app disposes its managed sidecar. Use that connection for backup, reads, and writes.
-4. Call `pixelpig_backup_project_movie` for the resolved project and record its timestamped backup path. Create exactly one session backup before the first write, after shutdown—not one backup per mutation.
-5. If that MCP action is unavailable, create a timestamped copy of the project's current `pixelpig-movies.json` in the project's established backups location before writing. The rolling `.bak` is best left alone, and an existing backup folder/pattern is usually worth following rather than starting a second convention.
-6. Fetch a fresh movie list and movie JSON with `pixelpig_list_project_movies` and `pixelpig_get_project_movie`.
-7. Apply the smallest requested direct mutation.
-8. Fetch the movie again and verify the exact changed and preserved fields.
-9. Reopen PixelPig, reconnect any client that should return to the desktop-managed MCP sidecar, and tell the user the verified edit is available.
-
-Repeat the fresh-read/mutate/post-read cycle for later writes in the same closed-app session, but do not create another timestamped backup. If PixelPig is reopened between edits, close and verify it again before the next write. A successful MCP response does not by itself prove the open editor retained the change.
-
-To restore a session snapshot, keep PixelPig closed, preserve the current project movie files separately, and copy the snapshot's `pixelpig-movies.json` over the project copy. Restore the snapshot `.bak` only when intentionally rolling back both saved generations. Validate the restored JSON before relaunching PixelPig.
-
-### App Lifecycle Commands
-
-- macOS installed app: quit with `osascript -e 'tell application "PixelPig" to quit'`, verify `pgrep -x PixelPig` returns nothing, and relaunch with `open -b ai.pixelpig`.
-- macOS repo/dev app: relaunch with `scripts/run-codex-app.sh` from the repository root.
-- Windows: capture the running PixelPig process executable path, call `CloseMainWindow()`, wait, and verify that no PixelPig process remains; restart the captured path after verification. When graceful shutdown times out, reporting the blocker is safer than force-killing the process.
+PixelPig must be open on the target project's Movie Editor for this workflow. If the tool reports that the editor or project is unavailable, surface that requirement instead of bypassing it with direct file mutation.
 
 ## Add Simple Clips
 
-Use `pixelpig_add_movie_clip` for a straightforward video insertion and pass the workflow output's absolute `filePath`, insertion index, measured duration, and any requested trim or playback rate.
+Use `pixelpig_add_movie_clip` for a straightforward video insertion in a scratch project and pass the workflow output's absolute `filePath`, insertion index, measured duration, and any requested trim or playback rate.
 
-`pixelpig_add_movie_audio_clip` suits a new approved audio element with an explicit start, duration, trim, and initial gain. Source audio stays at `0 dB` unless the user asks to mute, duck, or replace it. Adding music does not imply muting the source.
+`pixelpig_add_movie_audio_clip` suits a new approved audio element in a scratch project with an explicit start, duration, trim, and initial gain. Source audio stays at `0 dB` unless the user asks to mute, duck, or replace it. Adding music does not imply muting the source.
 
 For ordering, replacements, timing, fades, automation, or corrections, prefer a full fresh-read update:
 
@@ -70,7 +36,7 @@ For ordering, replacements, timing, fades, automation, or corrections, prefer a 
 4. `pixelpig_update_project_movie`, passing the read `updatedUtc` as `expectedUpdatedUtc`.
 5. Re-read and verify.
 
-The clip tools write the movie file directly, so they fit a scratch project or a closed-app session. Full updates go through the open target Movie Editor. On `movie_changed`, reread, merge, and retry with the new revision token.
+The clip tools write the movie file directly, so reserve them for scratch projects. Full updates to a user's project go through the open target Movie Editor. On `movie_changed`, reread, merge, and retry with the new revision token.
 
 ## Replace Approved Dialogue Safely
 
