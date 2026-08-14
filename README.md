@@ -60,16 +60,10 @@ Customer walkthroughs: [Codex](https://www.pixelpig.net/help/create-with-pixelpi
 
 ### 🎬 Pixel Pig Agent Skills
 
-Pixel Pig includes optional agent skills for people using Codex, Claude Code, OpenCode, Cursor, or other tools that support `SKILL.md`.
+Pixel Pig includes Cinema Director for people using Codex, Claude Code and other tools that support `SKILL.md`.
 
-- `/pixelpig-cinema-director` is the one to start with. It turns a plain-language idea into an approved visual plan, then guides image, video, dialogue, sound, rough-cut, retake, and delivery work through Pixel Pig MCP.
+- `/pixelpig-cinema-director` is installed and kept current automatically when you open Pixel Pig. It turns a plain-language idea into an approved visual plan, then guides image, video, dialogue, sound, rough-cut, retake, and delivery work through Pixel Pig MCP.
 - `/hyperframes-pixelpig` is optional. It prepares a Pixel Pig movie/project for the current HyperFrames workflow, preserves linked project media, verifies the finished render, and attaches it back to Pixel Pig.
-
-Install the director skill from the project folder where you use your AI agent:
-
-```bash
-npx skills add addr010/pixel-pig-releases --skill pixelpig-cinema-director
-```
 
 Add the HyperFrames bridge only if you use HyperFrames:
 

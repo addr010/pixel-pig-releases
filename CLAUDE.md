@@ -8,7 +8,7 @@ This is the **public releases and distribution** repo for Pixel Pig — a closed
 
 1. **User docs** — `README.md` (GitHub landing page) and `MCP-SETUP.md` (the canonical MCP connection guide).
 2. **Community model mappings** — `models/**/*.json` (see below).
-3. **Agent skills** — self-contained packages under `skills/*/`, installed by users via `npx skills add addr010/pixel-pig-releases --skill <name>`.
+3. **Optional agent integrations** — public packages under `skills/*/`. Cinema Director itself is bundled with the Pixel Pig app and is not published from this repo.
 
 > **The marketing website no longer lives here.** `pixelpig.net` is built from `website/` + `functions/` in the **private** `addr010/pixel-pig` repo and deployed to the `pixel-pig-releases` Cloudflare Pages project by `wrangler` on push to `main` (see `.github/workflows/deploy-website.yml` there). This repo must stay **public** because downloads resolve through `api.github.com` and the `/download/{win,mac}` Pages Function, both of which read GitHub Releases assets here unauthenticated.
 
@@ -35,12 +35,11 @@ Some models are intentionally **not** here — they're built into the app instea
 
 ## Skills (`skills/`)
 
-Two agent skill packages, each with a required `SKILL.md` plus optional `agents/` metadata and `references/` loaded on demand:
+This repo publishes one optional agent skill package with a required `SKILL.md` plus references loaded on demand:
 
-- `pixelpig-cinema-director` — the primary skill; drives Pixel Pig MCP for generation, dialogue/audio, movie editing, native rendering, retakes, and recovery. Its domain references keep the entrypoint concise. It enforces an explicit `projectRoot`, paid-run approval, and movie-state safety.
 - `hyperframes-pixelpig` — bridges a Pixel Pig movie into the current HyperFrames workflow, keeps source media linked, requires check/preview approval before render, and attaches the verified artifact back. It routes HyperFrames-specific work through the mandatory `hyperframes` entrypoint and current domain skills.
 
-Both skills depend on the Pixel Pig MCP server. When editing skills, keep them consistent with `MCP-SETUP.md` — it is the single source of truth for the connection details below.
+The HyperFrames bridge depends on the Pixel Pig MCP server. When editing it, keep it consistent with `MCP-SETUP.md` — it is the single source of truth for the connection details below.
 
 ## Pixel Pig MCP (reference)
 
@@ -50,4 +49,4 @@ Local MCP server bundled with the app; the desktop app starts/stops it automatic
 - `stdio` launch (when the app isn't running): `PixelPig.McpServer --stdio` (macOS path: `/Applications/PixelPig.app/Contents/Resources/app/PixelPig.McpServer`).
 - Workflow runs are async: `pixelpig_run_workflow` returns a `runId` immediately; poll `pixelpig_get_workflow_run` until outputs complete (images ~15–240s, video ≥1 min per 5s of output).
 
-If you change any of these facts, update `MCP-SETUP.md`, `README.md`, and both `SKILL.md` files together — they restate the same setup steps and must stay in sync.
+If you change any of these facts, update `MCP-SETUP.md`, `README.md`, and the HyperFrames bridge together — they restate the same setup steps and must stay in sync.
